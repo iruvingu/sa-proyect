@@ -8,15 +8,15 @@ export default function(ComposedComponent) {
       router: PropTypes.object
     };
 
-    componentWillMount() {
+    componentDidMount() {
       if (this.props.authenticated === null) {
-        this.context.router.history.push("/sa-app/login");
+        this.context.router.history.push("/login");
       }
     }
 
     componentWillUpdate(nextProps) {
       if (!nextProps.authenticated) {
-        this.context.router.history.push("/sa-app/login");
+        this.context.router.history.push("/login");
       }
     }
 

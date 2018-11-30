@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom'
+import { Router, Switch, Route } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
 import { connect } from 'react-redux'
 import { fetchUser } from './actions'
 /**
@@ -7,7 +8,8 @@ import { fetchUser } from './actions'
  */
 import HomePage from './components'
 import requireAuth from './components/auth/authRequire'
-import SignIn from './components/auth'
+import LoginContainer from './components/auth'
+import UserDetail from './components/users/detalle/UserDetails'
 
 class App extends Component {
 
@@ -17,12 +19,13 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <div className="container">
-          <Route exact path="/sa-app/login" component={SignIn} />
-          <Route path="/sa-app/home" component={requireAuth(HomePage)} />
-        </div>
-      </BrowserRouter>
+      <Router history={createBrowserHistory()}>
+        <Switch>
+          <Route exact path="/login" component={LoginContainer} />
+          <Route path="/user/detail" component={UserDetail} />
+          <Route path="/" component={requireAuth(HomePage)} />
+        </Switch>
+      </Router>
     );
   }
 }

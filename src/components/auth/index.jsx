@@ -21,9 +21,9 @@ class LoginContainer extends Component {
     router: PropTypes.object
   };
 
-  componentWillUpdate(nextProps) {
-    if (nextProps.auth) {
-      this.context.router.history.push("/sa-app/home");
+  componentDidUpdate(prevProps) {
+    if (!prevProps.auth) {
+      this.context.router.history.push('/')
     }
   }
 

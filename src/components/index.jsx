@@ -7,8 +7,11 @@ import styled from 'styled-components'
 import { connect } from 'react-redux';
 import * as actions from '../actions'
 
-// import SomeUsers from './users/index'
-// import MapTrack from './maps/MapTrack'
+/**
+ * Components
+ */
+import FirebaseUsers from './users'
+import MapTrack from './maps'
 
 // import FirebaseDB from './firebase-db'
 
@@ -80,7 +83,7 @@ class ClippedDrawer extends Component {
         >
           <div className={classes.toolbar} />
           {/* <SomeUsers /> */}
-          XD
+          <FirebaseUsers />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -97,7 +100,7 @@ class ClippedDrawer extends Component {
               justify='center'
               align='center'
               >
-                XD
+                <MapTrack />
               </Box>
               <Box
               flex

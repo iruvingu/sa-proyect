@@ -1,7 +1,11 @@
-import { combineReducers } from "redux";
+import { combineReducers } from "redux"
 
-import auth from "./authReducer";
+import auth from "./authReducer"
+import data from './dataReducer'
+import worker from './setUserReducer'
 
 export default combineReducers({
-  auth
+  auth,
+  data,
+  worker
 });
