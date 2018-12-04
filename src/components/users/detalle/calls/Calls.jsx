@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { connect } from 'react-redux'
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -35,24 +36,10 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-function createData(name, status, callDuration, date) {
-  id += 1;
-  return { id, name, status, callDuration, date};
-}
-
-const rows = [
-  createData('Persona 1', 'Recibida', '6:00 mins', '18/10/2018'),
-  createData('Persona 2', 'Recibida', '2:00 mins', '18/10/2018'),
-  createData('Persona 3', 'Perdida', '0:00 mins', '18/10/2018'),
-  createData('Persona 4', 'Marcada', '3:00 mins', '18/10/2018'),
-  createData('Persona 5', 'Recibida', '4:00 mins', '18/10/2018'),
-];
-
 class Calls extends React.Component {
 
   render = () => {
-  const { classes } = this.props;
+  const { classes, worker } = this.props;
 
   return (
     <Paper className={classes.root}>
@@ -60,19 +47,19 @@ class Calls extends React.Component {
         <TableHead>
           <TableRow>
             <CustomTableCell>Nombre</CustomTableCell>
-            <CustomTableCell >Estado</CustomTableCell>
+            <CustomTableCell >Numero</CustomTableCell>
+            <CustomTableCell >Tipo de llamada</CustomTableCell>
             <CustomTableCell >Duración</CustomTableCell>
-            <CustomTableCell >Fecha</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => {
+          {Object.values(worker.details.llamadas).map((call, index) => {
             return (
-              <TableRow className={classes.row} key={row.id}>
-                <CustomTableCell component="th" scope="row">{row.name}</CustomTableCell>
-                <CustomTableCell >{row.status}</CustomTableCell>
-                <CustomTableCell >{row.callDuration}</CustomTableCell>
-                <CustomTableCell >{row.date}</CustomTableCell>
+              <TableRow className={classes.row} key={index}>
+                <CustomTableCell component="th" scope="row">{call.nombre}</CustomTableCell>
+                <CustomTableCell >{call.numero}</CustomTableCell>
+                <CustomTableCell >{call.tipo}</CustomTableCell>
+                <CustomTableCell >{call.duracion}</CustomTableCell>
               </TableRow>
             );
           })}
@@ -88,4 +75,8 @@ Calls.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Calls);
+const CallsWithStyles = withStyles(styles)(Calls)
+
+const mapStateToProps = ({ worker }) => ({worker: worker.worker})
+
+export default connect(mapStateToProps, null)(CallsWithStyles)

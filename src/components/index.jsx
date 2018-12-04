@@ -12,8 +12,7 @@ import * as actions from '../actions'
  */
 import FirebaseUsers from './users'
 import MapTrack from './maps'
-
-// import FirebaseDB from './firebase-db'
+import GlobalInfo from './global_info'
 
 const StyledButton = styled.button`
   background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
@@ -89,7 +88,7 @@ class ClippedDrawer extends Component {
           <div className={classes.toolbar} />
           <div >
             <Flex
-            style={{height: '100vh',
+            style={{height: '50%',
             background: '#DCDCDC',
             borderRadius: '5px'}}
             column
@@ -105,13 +104,11 @@ class ClippedDrawer extends Component {
               <Box
               flex
               style={{
-              height: 'auto'
+              height: '50%',
+              width: '100%'
               }}
-              justify='flex-end'
               >
-                <div>
-                  XD
-                </div>
+                <GlobalInfo />
               </Box>
             </Flex>
           </div>

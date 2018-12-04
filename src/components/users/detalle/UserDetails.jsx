@@ -31,7 +31,7 @@ import PhoneIcon from '@material-ui/icons/Phone'
  * Components
  */
 import UserInfo from './user_info/UserInfo'
-import Messages from './sms/Messages'
+import Messages from './sms'
 import Contacts from './contacts/Contacts'
 import Calls from './calls/Calls'
 
