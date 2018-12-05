@@ -14,5 +14,6 @@ firebase.initializeApp(database);
 
 const databaseRef = firebase.database().ref();
 export const testUsersRef = databaseRef.child("test-users");
+export const realTimeUsersRef = databaseRef.child("realtime_users");
 export const authRef = firebase.auth();
 export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();

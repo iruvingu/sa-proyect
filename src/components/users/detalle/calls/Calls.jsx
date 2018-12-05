@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux'
 
+import { CONVERT_TIMESTAMP } from '../../../../services'
+
 const CustomTableCell = withStyles(theme => ({
   head: {
     backgroundColor: theme.palette.primary.dark,
@@ -24,10 +26,11 @@ const styles = theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
-    overflow: 'auto',
+    overflowY: 'auto',
+    maxWidth: 900,
   },
   table: {
-    minWidth: 600,
+    minWidth: 700,
   },
   row: {
     '&:nth-of-type(odd)': {
@@ -49,7 +52,8 @@ class Calls extends React.Component {
             <CustomTableCell>Nombre</CustomTableCell>
             <CustomTableCell >Numero</CustomTableCell>
             <CustomTableCell >Tipo de llamada</CustomTableCell>
-            <CustomTableCell >Duración</CustomTableCell>
+            <CustomTableCell >Fecha</CustomTableCell>
+            <CustomTableCell >Duración (segs)</CustomTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -59,7 +63,8 @@ class Calls extends React.Component {
                 <CustomTableCell component="th" scope="row">{call.nombre}</CustomTableCell>
                 <CustomTableCell >{call.numero}</CustomTableCell>
                 <CustomTableCell >{call.tipo}</CustomTableCell>
-                <CustomTableCell >{call.duracion}</CustomTableCell>
+                <CustomTableCell >{CONVERT_TIMESTAMP(call.fecha)}</CustomTableCell>
+                <CustomTableCell >{call.duracion} s</CustomTableCell>
               </TableRow>
             );
           })}

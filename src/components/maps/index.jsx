@@ -1,23 +1,23 @@
 import React, { Component } from 'react'
 import MapContainer from './MapContainer'
 import { connect } from 'react-redux'
-import { fetchFirebaseDB } from '../../actions'
+import { fecthRealTimeUsersLocationDB } from '../../actions'
 
 class MapTrack extends Component {
   componentDidMount() {
-    this.props.fetchFirebaseDB()
+    this.props.fecthRealTimeUsersLocationDB()
   }
 
   render() {
-    const { data } = this.props
+    const { realtimeUser } = this.props
     return (
-      <MapContainer workers={data} />
+      <MapContainer workers={realtimeUser} />
     )
   }
 }
 
-const mapStateToProps = ({ data }) => {
-  return ({ data })
+const mapStateToProps = ({ realtimeUser }) => {
+  return ({ realtimeUser })
 }
 
-export default connect(mapStateToProps, { fetchFirebaseDB })(MapTrack)
+export default connect(mapStateToProps, { fecthRealTimeUsersLocationDB })(MapTrack)

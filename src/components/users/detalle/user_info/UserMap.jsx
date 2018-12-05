@@ -1,25 +1,25 @@
 import React, { Component } from 'react'
-import GoogleMapReact from 'google-map-react'
-import { MAP_API_KEY } from '../../constants/helpers'
+import GoogleMapReact, {google} from 'google-map-react'
+import { MAP_API_KEY } from '../../../../constants/helpers'
 
-import CircleImagePose from './CircleImagePose'
+import CircleImagePose from '../../../maps/CircleImagePose'
 
-class MapContainer extends Component {
+class UserMap extends Component {
   static defaultProps = {
     center: {
       lat: 19.3911668,
       lng: -99.423815
     },
-    zoom: 6
+    zoom: 8
   };
 
-  markerPosition = (workers) => {
-    return Object.values(workers).map((worker,i) => {
+  markerPosition = (worker) => {
+    return Object.values(worker.details.location).map((location,i) => {
       return (
         <div
           key={i}
-          lat={worker.lat}
-          lng={worker.lng}
+          lat={location.lat}
+          lng={location.lng}
           style={{cursor: 'pointer'}}
         >
           <CircleImagePose image={worker.photoUri} />
@@ -29,7 +29,7 @@ class MapContainer extends Component {
   }
 
   render() {
-    const { workers } = this.props
+    const { worker } = this.props
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -37,13 +37,13 @@ class MapContainer extends Component {
           bootstrapURLKeys={{ key: MAP_API_KEY }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
-          hoverDistance={40}
+          hoverDistance={20}
         >
-          {this.markerPosition(workers, this.props)}
+          {this.markerPosition(worker, this.props)}
         </GoogleMapReact>
       </div>
     );
   }
 }
 
-export default MapContainer
+export default UserMap

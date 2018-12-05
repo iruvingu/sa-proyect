@@ -1,11 +1,30 @@
-import { testUsersRef, authRef, googleAuthProvider } from '../firebase_handler/firebase'
-import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER } from './type'
+import { testUsersRef, realTimeUsersRef, authRef, googleAuthProvider } from '../firebase_handler/firebase'
+import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER, FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD } from './type'
 
-// Setting the User to view
+// Setting the User to view and getting the user's data
 export const setWorker = (worker) => dispatch => {
   dispatch({
     type: SET_WORKER,
     payload: worker
+  })
+}
+
+export const listenDataAddedToChild = () => async dispatch => {
+  testUsersRef.on('child_added', (snapshot) => {
+    dispatch({
+      type: LISTEN_ADDED_DATA_TO_CHILD,
+      payload: snapshot.val()
+    })
+  })
+}
+
+// Fetching realtimeUser's location and date in the realtime_users node
+export const fecthRealTimeUsersLocationDB = () => async dispatch => {
+  realTimeUsersRef.on('value', snapshot => {
+    dispatch({
+      type: FETCH_REALTIME_USER_DB,
+      payload: snapshot.val()
+    })
   })
 }
 
