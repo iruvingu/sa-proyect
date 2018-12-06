@@ -7,12 +7,12 @@ import auth from "./authReducer"
 import data from './dataReducer'
 import worker from './setUserReducer'
 import realtimeUser from './rtUserLocationReducer'
-import userLocation from './dataAddedToChildReducer'
+import usersOnChange from './listenDataChildReducer'
 
 export default combineReducers({
   auth,
   data,
   worker,
   realtimeUser,
-  userLocation
+  usersOnChange
 });

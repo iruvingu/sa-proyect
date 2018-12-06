@@ -48,6 +48,10 @@ const styles = theme => ({
 });
 
 class ClippedDrawer extends Component {
+  async componentDidMount(){
+    this.props.setRealTimeUserLocation(this.props.usersOnChange)
+    this.props.listenDataAddedChild()
+  }
 
   render() {
     const { classes } = this.props;
@@ -124,4 +128,6 @@ ClippedDrawer.propTypes = {
 
 const HomeComponent = withStyles(styles)(ClippedDrawer);
 
-export default connect(null, actions)(HomeComponent)
+const mapStateToProps = ({ data, usersOnChange }) => ({ data, usersOnChange })
+
+export default connect(mapStateToProps, actions)(HomeComponent)
