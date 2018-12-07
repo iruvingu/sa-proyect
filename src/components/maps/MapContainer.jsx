@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
 import { MAP_API_KEY } from '../../constants/helpers'
 
-import CircleImagePose from './CircleImagePose'
+import {CircleImagePose} from './CircleImagePose'
 
 class MapContainer extends Component {
   static defaultProps = {

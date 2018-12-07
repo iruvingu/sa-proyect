@@ -49,8 +49,9 @@ const styles = theme => ({
 
 class ClippedDrawer extends Component {
   async componentDidMount(){
-    this.props.setRealTimeUserLocation(this.props.usersOnChange)
-    this.props.listenDataAddedChild()
+    if(this.props.listenDataAddedChild()){
+      this.props.setRealTimeUserLocation(this.props.usersOnChange)
+    }
   }
 
   render() {

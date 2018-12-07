@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
-import styled from 'styled-components'
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography'
 import moment from 'moment'
@@ -9,17 +8,33 @@ import { connect } from 'react-redux'
 
 import Periodo from './Periodo'
 
+const createDate = val => (
+  (val)
+    ? (moment(new Date()).format('YYYY-MM-DD'))
+    : (moment(new Date()).add(-1, 'days').format('YYYY-MM-DD'))
+)
+const today = createDate(1)
+const yesterday = createDate()
+
 class UserInfo extends Component {
-  createDate = val => (
-    (val)
-      ? (moment(new Date()).format('YYYY-MM-DD'))
-      : (moment(new Date()).add(-1, 'days').format('YYYY-MM-DD'))
-  )
+
+  state = {
+    startDate: yesterday,
+    finalDate: today
+  }
+
+  myCallbackStart = (dataFromChild) => {
+    this.setState({startDate: dataFromChild})
+  }
+
+  myCallbackEnd = (dataFromChild) => {
+    this.setState({finalDate: dataFromChild})
+  }
 
   render() {
     const { worker } = this.props
-    const today = this.createDate(1)
-    const yesterday = this.createDate()
+    console.log(this.state.startDate)
+    console.log(this.state.finalDate)
     return (
       <div style={{
         maxHeight: 400,
@@ -91,18 +106,18 @@ class UserInfo extends Component {
                 <div>Periodo desde: </div>
               </Box>
               <Box>
-                <Periodo defaultValue={yesterday} />
+                <Periodo defaultValue={yesterday} callBackFromParent={this.myCallbackStart} />
               </Box>
               <Box>
                 <div>hasta: </div>
               </Box>
               <Box>
-                <Periodo defaultValue={today} />
+                <Periodo defaultValue={today} callBackFromParent={this.myCallbackEnd} />
               </Box>
             </Flex>
           </Box>
           <Box>
-            <UserMap worker={worker} />
+            <UserMap worker={worker} startDate={this.state.startDate} finalDate={this.state.finalDate} />
           </Box>
         </Flex>
       </div>

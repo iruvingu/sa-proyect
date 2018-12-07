@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import GoogleMapReact, {google} from 'google-map-react'
 import { MAP_API_KEY } from '../../../../constants/helpers'
+import { CONVERT_DATE_TO_TIMESTAMP } from '../../../../services'
 
-import CircleImagePose from '../../../maps/CircleImagePose'
+import {CircleImagePose, SecondCircleImagePose} from '../../../maps/CircleImagePose'
 
 class UserMap extends Component {
+
   static defaultProps = {
     center: {
       lat: 19.3911668,
@@ -13,23 +15,60 @@ class UserMap extends Component {
     zoom: 8
   };
 
-  markerPosition = (worker) => {
-    return Object.values(worker.details.location).map((location,i) => {
+  filterLocationsByDate = (worker, startDate, finalDate) => {
+    return Object.keys(worker.details.location).filter(location => {
+      return (location < finalDate) && (location > startDate)
+    })
+  }
+
+  checkPositions = (worker, newLocations) => {
+    return newLocations.map(newLocation => {
+      return {
+        newWorker : {
+          photoUri: worker.photoUri,
+          locations: worker.details.location[newLocation]
+        }
+      }
+    })
+  }
+
+  markerPosition = (newWorkers) => {
+    return (newWorkers).map((newWorker,i) => {
+      console.log(newWorker.newWorker.locations)
+      console.log(i)
+      if (i === 0)
+         { 
+         return (<div
+            key={i}
+            lat={newWorker.newWorker.locations.lat}
+            lng={newWorker.newWorker.locations.lng}
+            style={{cursor: 'pointer'}}
+          >
+            <SecondCircleImagePose image={'/images/map_pin/location-pin-red.png'} />
+          </div>)
+      }
       return (
         <div
           key={i}
-          lat={location.lat}
-          lng={location.lng}
+          lat={newWorker.newWorker.locations.lat}
+          lng={newWorker.newWorker.locations.lng}
           style={{cursor: 'pointer'}}
         >
-          <CircleImagePose image={worker.photoUri} />
+          <CircleImagePose image={newWorker.newWorker.photoUri} />
         </div>
       )
     })
   }
 
   render() {
-    const { worker } = this.props
+    const { worker, startDate, finalDate } = this.props
+    const initDate = CONVERT_DATE_TO_TIMESTAMP(startDate)
+    const finDate = CONVERT_DATE_TO_TIMESTAMP(finalDate)
+    const newLocations = this.filterLocationsByDate(worker, initDate, finDate)
+    const newUser = this.checkPositions(worker, newLocations)
+
+    console.log(newUser)
+
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -39,7 +78,7 @@ class UserMap extends Component {
           defaultZoom={this.props.zoom}
           hoverDistance={20}
         >
-          {this.markerPosition(worker, this.props)}
+          {this.markerPosition(newUser, this.props)}
         </GoogleMapReact>
       </div>
     );

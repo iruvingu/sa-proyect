@@ -17,6 +17,10 @@ const styles = theme => ({
 
 class DatePickers extends Component {
 
+  sendDateToParent(event) {
+    this.props.callBackFromParent(event.target.value)
+  }
+
   render() {
     const { classes, defaultValue } = this.props;
     return (
@@ -25,6 +29,7 @@ class DatePickers extends Component {
           id="date"
           type="date"
           defaultValue={defaultValue}
+          onChange={this.sendDateToParent.bind(this)}
           className={classes.textField}
           InputLabelProps={{
             shrink: true,
