@@ -43,11 +43,14 @@ class Contacts extends Component {
         padding: 10
       }}>
       <Flex
-      style={{height: 'auto',boxShadow: '10px 10px 5px 0px rgba(0,0,0,0.75)',
+      style={{height: 'auto',boxShadow: '5px 5px 5px 0px rgba(0,0,0,0.75)',
       background: '#DCDCDC',
       borderRadius: '5px'}}
       column
       m={1}>
+        <Box>
+          <Typography variant={'h6'}>Contacos</Typography>
+        </Box>
         <Box
         flex
         column

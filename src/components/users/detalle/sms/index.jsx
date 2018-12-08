@@ -89,9 +89,11 @@ class Mensaje extends Component {
         <Flex
         style={{width: '100%', height: '100vh', maxHeight: 500,}}
         flex
-        w={1/2}
         align='center'
         column>
+          <Box>
+            <Typography variant={'h6'}>Mensajes SMS</Typography>
+          </Box>
           <Box
           m={1}
           w={1/2}
