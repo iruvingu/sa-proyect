@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux'
 
 import { CONVERT_TIMESTAMP } from '../../../../services'
+import { Typography } from '@material-ui/core';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -46,6 +47,7 @@ class Calls extends React.Component {
 
   return (
     <Paper className={classes.root}>
+    <Typography variant={'h6'}>Llamadas recientes</Typography>
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
