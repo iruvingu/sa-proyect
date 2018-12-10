@@ -1,5 +1,5 @@
 import { testUsersRef, realTimeUsersRef, authRef, googleAuthProvider } from '../firebase_handler/firebase'
-import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER, FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD , SET_USER_REALTIME_LOCATION} from './type'
+import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER, FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD } from './type'
 import { CONVERT_TIMESTAMP } from '../services'
 
 // Setting the User to view and getting the user's data
@@ -10,41 +10,41 @@ export const setWorker = (worker) => dispatch => {
   })
 }
 
-export const listenDataAddedChild = () => async dispatch => {
-  testUsersRef.on('child_changed', snapshot => {
-    dispatch({
-      type: LISTEN_ADDED_DATA_TO_CHILD,
-      payload: snapshot.val()
-    })
-  })
-}
-
 // Send the data of the users to the realtime_users
-export const setRealTimeUserLocation = (worker) => async dispatch => {
-    const higherLocation = (Object.keys(worker.details.location))
+export const listenDataAddedChild = () => async dispatch => {
+  testUsersRef.on('value', snapshot => {
+    console.log(snapshot.val())
+    const workers = snapshot.val();
+
+    const workersActualized = Object.values(workers).map(worker => {
+      const higherLocation = (Object.keys(worker.details.location))
       .reduce((prevLocation, location) => 
         (prevLocation > location)
           ? prevLocation
           : location
         );
 
-    const convertLocationToDate = CONVERT_TIMESTAMP(higherLocation);
+      const convertLocationToDate = CONVERT_TIMESTAMP(higherLocation);
 
-    const ObjectToUpdate = {
-      [worker.id] : {
-        "fecha" : convertLocationToDate,
-        "lat" : worker.details.location[higherLocation].lat,
-        "lng" : worker.details.location[higherLocation].lng,
-        "photoUri" : (worker.photoUri)
+      const ObjectToUpdate = {
+        [worker.id] : {
+          "fecha" : convertLocationToDate,
+          "lat" : worker.details.location[higherLocation].lat,
+          "lng" : worker.details.location[higherLocation].lng,
+          "photoUri" : (worker.photoUri)
+        }
       }
-    }
 
-    realTimeUsersRef.update(ObjectToUpdate)
+      realTimeUsersRef.update(ObjectToUpdate)
+
+      return ObjectToUpdate;
+    })
 
     dispatch({
-      type: SET_USER_REALTIME_LOCATION,
-      payload: ObjectToUpdate
+      type: LISTEN_ADDED_DATA_TO_CHILD,
+      payload: workersActualized
     })
+  })
 }
 
 // Fetching realtimeUser's location and date in the realtime_users node

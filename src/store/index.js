@@ -9,7 +9,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||compose;
 const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['auth'] // auth will not be persisted
+  blacklist: ['auth', 'usersOnChange', 'realtimeUser'] // auth will not be persisted
 }
 
 const persistedReducer = persistReducer(persistConfig, reducers)
