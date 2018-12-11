@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
-import Avatar from '@material-ui/core/Avatar';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import { Paper, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from '@material-ui/core'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Face from '@material-ui/icons/Face'
 import Typography from '@material-ui/core/Typography';
@@ -43,12 +40,11 @@ class Contacts extends Component {
         padding: 10
       }}>
       <Flex
-      style={{height: 'auto',boxShadow: '5px 5px 5px 0px rgba(0,0,0,0.75)',
-      background: '#DCDCDC',
-      borderRadius: '5px'}}
+      style={{height: 'auto'}}
       column
       m={1}>
-        <Box>
+        <Paper>
+<Box>
           <Typography variant={'h6'}>Contacos</Typography>
         </Box>
         <Box
@@ -88,6 +84,8 @@ class Contacts extends Component {
           )
           }
         </Box>
+        </Paper>
+        
       </Flex>
         
       </div>

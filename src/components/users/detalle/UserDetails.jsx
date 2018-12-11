@@ -2,30 +2,14 @@ import React, { Component} from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, ListItem, ListItemIcon, ListItemText, Fab } from '@material-ui/core';
 
+import IconButton from '@material-ui/core/IconButton';
 /**
  * icons
  */
 
-import Home from '@material-ui/icons/Home'
-import PersonPinIcon from '@material-ui/icons/PersonPin'
-import ContactsIcon from '@material-ui/icons/ContactPhone'
-import { Sms } from '@material-ui/icons'
-import PhoneIcon from '@material-ui/icons/Phone'
+import { Sms, Home, PersonPin, ContactPhone, Phone, ArrowBack } from '@material-ui/icons'
 
 /**
  * Components
@@ -34,8 +18,9 @@ import UserInfo from './user_info/UserInfo'
 import Messages from './sms'
 import Contacts from './contacts/Contacts'
 import Calls from './calls/Calls'
+import Saludo from './saludo'
 
-import { Link, withRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { Link, Route, Switch } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -45,57 +30,24 @@ const styles = theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
   },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
   },
   drawerPaper: {
     position: 'relative',
-    whiteSpace: 'nowrap',
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
   },
+  toolbar: theme.mixins.toolbar,
+  menuButton: {
+    marginLeft: 12,
+    marginRight: 36,
+  }
 });
 
 class UserDetails extends Component {
@@ -109,15 +61,6 @@ class UserDetails extends Component {
     this.setState({ selectedIndex: index });
   };
 
-  // Change the Drawer's state to true
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  // Change the Drawer's state to false
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
 
   render() {
     const { classes, theme } = this.props;
@@ -127,40 +70,32 @@ class UserDetails extends Component {
         <CssBaseline />
         <AppBar
           position="fixed"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: this.state.open,
-          })}
+          className={classes.appBar}
         >
-          <Toolbar disableGutters={!this.state.open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, {
-                [classes.hide]: this.state.open,
-              })}
+          <Toolbar>
+            <Fab
+              size="small"
+              color="primary"
+              className={classNames(classes.menuButton)}
             >
-              <MenuIcon />
-            </IconButton>
+              <Link to="/">
+                <ArrowBack />
+              </Link>
+            </Fab>
             <Typography variant="h6" color="inherit" noWrap>
               Información del Usuario
             </Typography>
           </Toolbar>
         </AppBar>
         <Drawer
-          variant="permanent"
-          classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
-          }}
-          open={this.state.open}
+        className={classes.drawer}
+        variant="permanent"
+        classes={{
+          paper: classes.drawerPaper,
+        }}
         >
-          <div className={classes.toolbar}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
+          <div className={classes.toolbar} />
+            <List>
             {['Usuario', 'Contactos', 'SMS', 'Llamadas'].map((text, index) => (
               <ListItem 
                 button
@@ -172,13 +107,13 @@ class UserDetails extends Component {
               >
                 <ListItemIcon>
                   {index === 0
-                    ? <PersonPinIcon />
+                    ? <PersonPin />
                     : index === 1
-                      ? <ContactsIcon />  
+                      ? <ContactPhone />  
                       : index === 2
                         ? <Sms />
                         : index === 3
-                          ? <PhoneIcon />
+                          ? <Phone />
                           : <Home />
                   }
                 </ListItemIcon>
@@ -195,7 +130,7 @@ class UserDetails extends Component {
                 <ListItemText primary={text} />
               </ListItem>
             ))}
-          </List>
+          </List>       
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
@@ -204,6 +139,7 @@ class UserDetails extends Component {
               <Route path='/user/detail/Contactos' component={Contacts}/>
               <Route path='/user/detail/SMS' component={Messages}/>
               <Route path='/user/detail/Llamadas' component={Calls}/>
+              <Route path='/user/detail/' component={Saludo} />
             </Switch>
         </main>
       </div>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography'
+import { Avatar, Typography, Paper } from '@material-ui/core';
 import moment from 'moment'
 import UserMap from './UserMap'
 import { connect } from 'react-redux'
@@ -42,13 +41,12 @@ class UserInfo extends Component {
         <Flex
         column
         >
-          <Box
+        <Paper>
+           <Box
           flex
           justify='center'
           align='center'
-          style={{height: 'auto',
-          background: '#DCDCDC',
-          borderRadius: '5px'}}>
+          style={{height: 'auto',}}>
             <Flex
             justify='space-around'
             style={{
@@ -86,22 +84,23 @@ class UserInfo extends Component {
               </Box>
             </Flex>
 
-          </Box>
+          </Box>      
+        </Paper>
+         
             
           <Box
           my={1}
           flex
           justify='center'
           align='center'
-          style={{height: 'auto',
-          background: '#DCDCDC',
-          borderRadius: '5px'}}>
-            <Flex
-            flex
-            justify='flex-end'
-            style={{
-              minWidth: '100%'
-              }}>
+          style={{height: 'auto'}}>
+            <Paper style={{width: '100%'}}>
+              <Flex
+              flex
+              justify='flex-end'
+              style={{
+                minWidth: '100%'
+                }}>
               <Box>
                 <div>Periodo desde: </div>
               </Box>
@@ -114,10 +113,16 @@ class UserInfo extends Component {
               <Box>
                 <Periodo defaultValue={today} callBackFromParent={this.myCallbackEnd} />
               </Box>
-            </Flex>
+              </Flex>
+            </Paper>
+            
           </Box>
-          <Box>
-            <UserMap worker={worker} startDate={this.state.startDate} finalDate={this.state.finalDate} />
+          
+          <Box
+          mb={2}>
+            <Paper elevation={2}>
+              <UserMap worker={worker} startDate={this.state.startDate} finalDate={this.state.finalDate} />
+            </Paper>
           </Box>
         </Flex>
       </div>

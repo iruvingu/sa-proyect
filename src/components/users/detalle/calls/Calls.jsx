@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Flex, Box } from 'reflexbox'
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -46,33 +47,40 @@ class Calls extends React.Component {
   const { classes, worker } = this.props;
 
   return (
-    <Paper className={classes.root}>
-    <Typography variant={'h6'}>Llamadas recientes</Typography>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <CustomTableCell>Nombre</CustomTableCell>
-            <CustomTableCell >Numero</CustomTableCell>
-            <CustomTableCell >Tipo de llamada</CustomTableCell>
-            <CustomTableCell >Fecha</CustomTableCell>
-            <CustomTableCell >Duración (segs)</CustomTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Object.values(worker.details.llamadas).map((call, index) => {
-            return (
-              <TableRow className={classes.row} key={index}>
-                <CustomTableCell component="th" scope="row">{call.nombre}</CustomTableCell>
-                <CustomTableCell >{call.numero}</CustomTableCell>
-                <CustomTableCell >{call.tipo}</CustomTableCell>
-                <CustomTableCell >{CONVERT_TIMESTAMP(call.fecha)}</CustomTableCell>
-                <CustomTableCell >{call.duracion} s</CustomTableCell>
+    <Flex
+    w={1}
+    align='baseline'
+    justify='center'>
+      <Box>
+        <Paper className={classes.root}>
+        <Typography variant={'h6'}>Llamadas recientes</Typography>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <CustomTableCell>Nombre</CustomTableCell>
+                <CustomTableCell >Número</CustomTableCell>
+                <CustomTableCell >Tipo de llamada</CustomTableCell>
+                <CustomTableCell >Fecha</CustomTableCell>
+                <CustomTableCell >Duración (segs)</CustomTableCell>
               </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
+            </TableHead>
+            <TableBody>
+              {Object.values(worker.details.llamadas).map((call, index) => {
+                return (
+                  <TableRow className={classes.row} key={index}>
+                    <CustomTableCell component="th" scope="row">{call.nombre}</CustomTableCell>
+                    <CustomTableCell >{call.numero}</CustomTableCell>
+                    <CustomTableCell >{call.tipo}</CustomTableCell>
+                    <CustomTableCell >{CONVERT_TIMESTAMP(call.fecha)}</CustomTableCell>
+                    <CustomTableCell >{call.duracion} s</CustomTableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Paper>
+      </Box>
+    </Flex>
   );
   }
   
