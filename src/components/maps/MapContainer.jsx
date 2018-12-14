@@ -13,6 +13,12 @@ class MapContainer extends Component {
     zoom: 6
   };
 
+  createMapOptions = (maps) => {
+    return {
+      styles: [{ stylers: [{ 'gamma': 0.8 }, { 'lightness': 4 }, { 'visibility': 'on' }] }]
+    }
+  }
+
   markerPosition = (workers) => {
     return Object.values(workers).map((worker,i) => {
       return (
@@ -22,7 +28,7 @@ class MapContainer extends Component {
           lng={worker.lng}
           style={{cursor: 'pointer'}}
         >
-          <CircleImagePose image={worker.photoUri} />
+          <CircleImagePose image={worker.photoUri} title={worker.fecha} />
         </div>
       )
     })
@@ -38,6 +44,7 @@ class MapContainer extends Component {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           hoverDistance={40}
+          options={this.createMapOptions}
         >
           {this.markerPosition(workers, this.props)}
         </GoogleMapReact>

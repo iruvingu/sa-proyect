@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import GoogleMapReact, {google} from 'google-map-react'
 import { MAP_API_KEY } from '../../../../constants/helpers'
-import { CONVERT_DATE_TO_TIMESTAMP } from '../../../../services'
+import { CONVERT_DATE_TO_TIMESTAMP, CONVERT_TIMESTAMP } from '../../../../services'
 
 import {CircleImagePose, SecondCircleImagePose} from '../../../maps/CircleImagePose'
 
@@ -23,10 +23,12 @@ class UserMap extends Component {
 
   checkPositions = (worker, newLocations) => {
     return newLocations.map(newLocation => {
+      const convertNewLocationToDate = CONVERT_TIMESTAMP(newLocation)
       return {
         newWorker : {
           photoUri: worker.photoUri,
-          locations: worker.details.location[newLocation]
+          locations: worker.details.location[newLocation],
+          fecha: convertNewLocationToDate
         }
       }
     })
@@ -34,8 +36,8 @@ class UserMap extends Component {
 
   markerPosition = (newWorkers) => {
     return (newWorkers).map((newWorker,i) => {
-      console.log(newWorker.newWorker.locations)
-      console.log(i)
+      // console.log(newWorker.newWorker.locations)
+      // console.log(i)
       if (i === 0)
          { 
          return (<div
@@ -44,7 +46,10 @@ class UserMap extends Component {
             lng={newWorker.newWorker.locations.lng}
             style={{cursor: 'pointer'}}
           >
-            <SecondCircleImagePose image={'/images/map_pin/location-pin-red.png'} />
+            <SecondCircleImagePose
+              image={newWorker.newWorker.photoUri}
+              title={newWorker.newWorker.fecha}
+            />
           </div>)
       }
       return (
@@ -54,7 +59,10 @@ class UserMap extends Component {
           lng={newWorker.newWorker.locations.lng}
           style={{cursor: 'pointer'}}
         >
-          <CircleImagePose image={newWorker.newWorker.photoUri} />
+          <CircleImagePose
+            image={newWorker.newWorker.photoUri}
+            title={newWorker.newWorker.fecha}
+          />
         </div>
       )
     })
@@ -67,7 +75,7 @@ class UserMap extends Component {
     const newLocations = this.filterLocationsByDate(worker, initDate, finDate)
     const newUser = this.checkPositions(worker, newLocations)
 
-    console.log(newUser)
+    // console.log(newUser)
 
     return (
       // Important! Always set the container height explicitly

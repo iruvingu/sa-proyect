@@ -36,7 +36,6 @@ const styles = theme => ({
     flexShrink: 0,
   },
   drawerPaper: {
-    position: 'relative',
     width: drawerWidth,
   },
   content: {

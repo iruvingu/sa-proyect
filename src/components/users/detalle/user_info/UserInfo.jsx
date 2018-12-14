@@ -32,8 +32,8 @@ class UserInfo extends Component {
 
   render() {
     const { worker } = this.props
-    console.log(this.state.startDate)
-    console.log(this.state.finalDate)
+    // console.log(this.state.startDate)
+    // console.log(this.state.finalDate)
     return (
       <div style={{
         maxHeight: 400,

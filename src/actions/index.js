@@ -13,7 +13,7 @@ export const setWorker = (worker) => dispatch => {
 // Send the data of the users to the realtime_users
 export const listenDataAddedChild = () => async dispatch => {
   testUsersRef.on('value', snapshot => {
-    console.log(snapshot.val())
+    // console.log(snapshot.val())
     const workers = snapshot.val();
 
     const workersActualized = Object.values(workers).map(worker => {
