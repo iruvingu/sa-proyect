@@ -1,6 +1,15 @@
-import { testUsersRef, realTimeUsersRef, authRef, googleAuthProvider } from '../firebase_handler/firebase'
-import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER, FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD } from './type'
+import { testUsersRef, realTimeUsersRef, authRef, googleAuthProvider, usersBranchRef } from '../firebase_handler/firebase'
+import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER,
+  FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD, SET_MARKER } from './type'
 import { CONVERT_TIMESTAMP } from '../services'
+
+// Hover a marker
+export const woverMarker = (markerId) => dispatch => {
+  dispatch({
+    type: SET_MARKER,
+    payload: markerId
+  })
+}
 
 // Setting the User to view and getting the user's data
 export const setWorker = (worker) => dispatch => {
@@ -31,7 +40,9 @@ export const listenDataAddedChild = () => async dispatch => {
           "fecha" : convertLocationToDate,
           "lat" : worker.details.location[higherLocation].lat,
           "lng" : worker.details.location[higherLocation].lng,
-          "photoUri" : (worker.photoUri)
+          "photoUri" : (worker.photoUri),
+          "id" : worker.id,
+          "name" : worker.name
         }
       }
 

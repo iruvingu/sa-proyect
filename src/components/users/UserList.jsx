@@ -2,16 +2,8 @@ import React, { Component } from 'react'
 /**
  * @material-iu core
  */
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+import { List, ListItem, ListItemText, ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Avatar, Typography, Divider } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 /**
@@ -26,7 +18,6 @@ import { connect } from 'react-redux'
 import { setWorker } from '../../actions'
 import { Link } from 'react-router-dom'
 import { Flex, Box } from 'reflexbox'
-
 
 const styles = theme => ({
   root: {
@@ -50,7 +41,13 @@ class UserList extends Component {
   state = {
     expanded: null,
     search: '',
+    slectedIndex: 0,
+    background : '#EF3636'
   }
+
+  handleListItemClick = (event, index) => {
+    this.setState({ selectedIndex: index });
+  };
 
   handleChange = panel => (event, expanded) => {
     this.setState({
@@ -108,12 +105,17 @@ class UserList extends Component {
                       <ExpansionPanel
                       expanded={expanded === (`panel${index}`)}
                       onChange={this.handleChange(`panel${index}`)}
+                      // onMouseEnter={() => {
+                      //   this.setState({background: '#A10000'})
+                      // }}
+                      // onMouseLeave={() => {
+                      //   this.setState({background: '#EF3636'});
+                      // }}
                       >
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.row}>
                           <Avatar src={user.photoUri} style={{width: 30, height: 30}} />
-                          <Divider />
                           <Typography className={classes.heading}>{user.name}</Typography>
-                          </ExpansionPanelSummary>
+                        </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                         <div className={classes.root}>
                         <List component="nav">

@@ -19,6 +19,11 @@ class MapContainer extends Component {
     }
   }
 
+  _onChildMouseEnter = (key, childProps) => {
+    console.log(`Marcador con id = ${childProps.children.props.id}`)
+    // console.log(this.props)
+  }
+
   markerPosition = (workers) => {
     return Object.values(workers).map((worker,i) => {
       return (
@@ -28,7 +33,7 @@ class MapContainer extends Component {
           lng={worker.lng}
           style={{cursor: 'pointer'}}
         >
-          <CircleImagePose image={worker.photoUri} title={worker.fecha} />
+          <CircleImagePose image={worker.photoUri} title={worker.fecha} id={worker.id} />
         </div>
       )
     })
@@ -45,6 +50,7 @@ class MapContainer extends Component {
           defaultZoom={this.props.zoom}
           hoverDistance={40}
           options={this.createMapOptions}
+          onChildMouseEnter={this._onChildMouseEnter}
         >
           {this.markerPosition(workers, this.props)}
         </GoogleMapReact>
