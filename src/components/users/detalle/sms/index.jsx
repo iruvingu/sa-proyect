@@ -40,7 +40,22 @@ const styles = theme => ({
 class Mensaje extends Component {
   state= {
     search1: '',
-    search2: ''
+    search2: '',
+    messagesSent: [{body: '', date: '', number: '', status: ''}],
+    messagesReceived: [{body: '', date: '', number: '', status: ''}],
+    nulo: ''
+  }
+
+  componentDidMount() {
+    (!this.props.worker.details.mensajes)
+      ? this.setState({nulo: 'nulo'})
+      : this.setState({
+      messagesSent: Object.values(this.props.worker.details.mensajes).filter(mensaje => { 
+      return mensaje.status === 'enviado'}),
+      messagesReceived: Object.values(this.props.worker.details.mensajes).filter(mensaje => { 
+        return mensaje.status === 'recibido'})
+      })
+    
   }
 
   bodyMessageSubstring = body => (
@@ -78,11 +93,7 @@ class Mensaje extends Component {
   )
 
   render() {
-    const { worker, classes } = this.props;
-    const messagesSent = Object.values(worker.details.mensajes).filter(mensaje => { 
-      return mensaje.status === 'enviado'})
-    const messagesReceived = Object.values(worker.details.mensajes).filter(mensaje => { 
-      return mensaje.status === 'recibido'})
+    const { classes } = this.props;
 
     return(
       <div>
@@ -117,7 +128,8 @@ class Mensaje extends Component {
             </Box>
             <Box>
             {
-              this.filterMessagesSent(messagesSent).map((message, index) => (
+
+              this.filterMessagesSent(this.state.messagesSent).map((message, index) => (
                 <div key={index}>
                   <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -158,7 +170,7 @@ class Mensaje extends Component {
             </Box>
             <Box>
             {
-              this.filterMessagesReceived(messagesReceived).map((message, index) => (
+              this.filterMessagesReceived(this.state.messagesReceived).map((message, index) => (
                 <div key={index}>
                   <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>

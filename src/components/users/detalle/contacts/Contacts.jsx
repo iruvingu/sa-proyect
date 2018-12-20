@@ -45,7 +45,7 @@ class Contacts extends Component {
       m={1}>
         <Paper>
         <Box>
-          <Typography variant={'h6'}>Contacos</Typography>
+          <Typography variant={'h6'}>Contactos</Typography>
         </Box>
         <Box
         flex
@@ -54,7 +54,11 @@ class Contacts extends Component {
         align='center'
         m={1}
         >
-          {Object.values(worker.details.contactos).map((contact, index) => (
+          {
+            (worker.details.contactos === undefined)
+            ? <div>No hay contactos guardados</div>
+            :
+            Object.values(worker.details.contactos).map((contact, index) => (
             <div style={{width: '100%'}} key={index}>
             <ExpansionPanel
             expanded={expanded === (`panel${index}`)}

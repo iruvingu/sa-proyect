@@ -65,7 +65,11 @@ class Calls extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {Object.values(worker.details.llamadas).map((call, index) => {
+              {
+                (worker.details.llamadas === undefined)
+                  ? <div>No hay llamadas aún</div>
+                  :                
+                Object.values(worker.details.llamadas).map((call, index) => {
                 return (
                   <TableRow className={classes.row} key={index}>
                     <CustomTableCell component="th" scope="row">{call.nombre}</CustomTableCell>

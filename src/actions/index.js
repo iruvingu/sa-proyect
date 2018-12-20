@@ -26,6 +26,15 @@ export const listenDataAddedChild = () => async dispatch => {
     const workers = snapshot.val();
 
     const workersActualized = Object.values(workers).map(worker => {
+
+      if(worker.photoUri === undefined) {
+        console.log(`${worker.id} has no foto`)
+        // const workerId = worker.id
+        // testUsersRef.child(workerId).update({
+        //   "photoUri" : "/images/faces/user.png"
+        // })
+      }
+
       const higherLocation = (Object.keys(worker.details.location))
       .reduce((prevLocation, location) => 
         (prevLocation > location)

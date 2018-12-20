@@ -76,9 +76,6 @@ class UserInfo extends Component {
                   <Typography variant="subtitle2" gutterBottom>Bateria: {worker.device.batery}</Typography>
                 </Box>
                 <Box>
-                  <Typography variant="subtitle2" gutterBottom>Marca: {worker.device.product}</Typography>
-                </Box>
-                <Box>
                   <Typography variant="subtitle2" gutterBottom>Signal: {worker.device.signal}</Typography>
                 </Box>
               </Box>
