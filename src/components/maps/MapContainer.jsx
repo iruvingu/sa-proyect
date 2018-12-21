@@ -33,7 +33,11 @@ class MapContainer extends Component {
           lng={worker.lng}
           style={{cursor: 'pointer'}}
         >
-          <CircleImagePose image={worker.photoUri} title={worker.fecha} id={worker.id} />
+          {(!worker.photoUri)
+            ? <CircleImagePose image={'/images/faces/man.png'} title={worker.fecha} id={worker.id} />
+            : <CircleImagePose image={worker.photoUri} title={worker.fecha} id={worker.id} />
+          }
+          {/* <CircleImagePose image={worker.photoUri} title={worker.fecha} id={worker.id} /> */}
         </div>
       )
     })

@@ -17,7 +17,8 @@ class UserMap extends Component {
 
   filterLocationsByDate = (worker, startDate, finalDate) => {
     return Object.keys(worker.details.location).filter(location => {
-      return (location < finalDate) && (location > startDate)
+      console.log(`location: ${location}, finalDate: ${finalDate}`)
+      return (location <= finalDate) && (location > startDate)
     })
   }
 

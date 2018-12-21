@@ -27,14 +27,6 @@ export const listenDataAddedChild = () => async dispatch => {
 
     const workersActualized = Object.values(workers).map(worker => {
 
-      if(worker.photoUri === undefined) {
-        console.log(`${worker.id} has no foto`)
-        // const workerId = worker.id
-        // testUsersRef.child(workerId).update({
-        //   "photoUri" : "/images/faces/user.png"
-        // })
-      }
-
       const higherLocation = (Object.keys(worker.details.location))
       .reduce((prevLocation, location) => 
         (prevLocation > location)
@@ -44,7 +36,26 @@ export const listenDataAddedChild = () => async dispatch => {
 
       const convertLocationToDate = CONVERT_TIMESTAMP(higherLocation);
 
-      const ObjectToUpdate = {
+      var ObjectToUpdate;
+
+      if(worker.photoUri === undefined) {
+        console.log(`${worker.id} has no foto`)
+        const workerId = worker.id
+        testUsersRef.child(workerId).update({
+          "photoUri" : "/images/faces/man.png"
+        })
+        ObjectToUpdate = {
+          [worker.id] : {
+            "fecha" : convertLocationToDate,
+            "lat" : worker.details.location[higherLocation].lat,
+            "lng" : worker.details.location[higherLocation].lng,
+            "photoUri" : "/images/faces/man.png",
+            "id" : worker.id,
+            "name" : worker.name
+          }
+        }
+      } else {
+        ObjectToUpdate = {
         [worker.id] : {
           "fecha" : convertLocationToDate,
           "lat" : worker.details.location[higherLocation].lat,
@@ -54,6 +65,9 @@ export const listenDataAddedChild = () => async dispatch => {
           "name" : worker.name
         }
       }
+      }
+
+      
 
       realTimeUsersRef.update(ObjectToUpdate)
 

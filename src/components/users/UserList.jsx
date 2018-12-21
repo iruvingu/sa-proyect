@@ -113,7 +113,11 @@ class UserList extends Component {
                       // }}
                       >
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.row}>
-                          <Avatar src={user.photoUri} style={{width: 30, height: 30}} />
+                          {(!user.photoUri)
+                            ? <Avatar src={'/images/faces/man.png'} style={{width: 30, height: 30}} />
+                            : <Avatar src={user.photoUri} style={{width: 30, height: 30}} />
+                          }
+                          {/* <Avatar src={user.photoUri} style={{width: 30, height: 30}} /> */}
                           <Typography className={classes.heading}>{user.name}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>

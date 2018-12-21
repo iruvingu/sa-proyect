@@ -42,7 +42,7 @@ class Global extends Component {
             align='center'
             mx={1}>
               <Typography variant='h6'>
-                Usuarios desconectados durante
+                Usuarios desconectados por más de
               </Typography>
               
             </Box>

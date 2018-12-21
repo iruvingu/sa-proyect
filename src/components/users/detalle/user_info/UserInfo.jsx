@@ -9,8 +9,8 @@ import Periodo from './Periodo'
 
 const createDate = val => (
   (val)
-    ? (moment(new Date()).format('YYYY-MM-DD'))
-    : (moment(new Date()).add(-1, 'days').format('YYYY-MM-DD'))
+    ? (moment(new Date()).format('YYYY-MM-DD hh:mm:ss'))
+    : (moment(new Date()).add(-1, 'days').format('YYYY-MM-DD hh:mm:ss'))
 )
 const today = createDate(1)
 const yesterday = createDate()
