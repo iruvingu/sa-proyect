@@ -13,7 +13,7 @@ const database =
 firebase.initializeApp(database);
 
 const databaseRef = firebase.database().ref();
-export const testUsersRef = databaseRef.child("test-users");
+export const testUsersRef = databaseRef.child("real_users");
 export const realTimeUsersRef = databaseRef.child("realtime_users");
 export const usersBranchRef = databaseRef.child("real_users");
 export const authRef = firebase.auth();

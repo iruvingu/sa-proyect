@@ -66,17 +66,17 @@ class Calls extends React.Component {
             </TableHead>
             <TableBody>
               {
-                (worker.details.llamadas === undefined)
+                (worker.details.calls === undefined)
                   ? <div>No hay llamadas aún</div>
                   :                
-                Object.values(worker.details.llamadas).map((call, index) => {
+                Object.values(worker.details.calls).map((call, index) => {
                 return (
                   <TableRow className={classes.row} key={index}>
-                    <CustomTableCell component="th" scope="row">{call.nombre}</CustomTableCell>
-                    <CustomTableCell >{call.numero}</CustomTableCell>
-                    <CustomTableCell >{call.tipo}</CustomTableCell>
-                    <CustomTableCell >{CONVERT_TIMESTAMP(call.fecha)}</CustomTableCell>
-                    <CustomTableCell >{call.duracion} s</CustomTableCell>
+                    <CustomTableCell component="th" scope="row">{call.name}</CustomTableCell>
+                    <CustomTableCell >{call.number}</CustomTableCell>
+                    <CustomTableCell >{call.state}</CustomTableCell>
+                    <CustomTableCell >{CONVERT_TIMESTAMP(call.date)}</CustomTableCell>
+                    <CustomTableCell >{call.duration} s</CustomTableCell>
                   </TableRow>
                 );
               })}

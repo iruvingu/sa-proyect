@@ -4,16 +4,33 @@ import { fetchFirebaseDB } from '../../actions'
 import UserList from './UserList'
 
 class SomeUsers extends Component {
-    componentDidMount() {
-      this.props.fetchFirebaseDB()
-    }
 
-    render() {
-      const { data } = this.props
-      return (
-          <UserList users={data} />
-      )
+  state = {
+    users: {
+      user: {
+        name: '',
+        id: ''
+      }
     }
+  }
+
+  componentDidMount() {
+    this.props.fetchFirebaseDB()
+  }
+
+  render() {
+    const { data } = this.props
+    if(!data) {
+      return (
+        <UserList users={this.state.users} />
+      )
+    } else {
+      return (
+        <UserList users={data} />
+    )
+    }
+    
+  }
 }
 
 const mapStateToProps = ({ data }) => {

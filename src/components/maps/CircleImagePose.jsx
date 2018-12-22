@@ -44,6 +44,14 @@ const Circle2 = posed.div({
   }
 })
 
+const Circle3 = posed.div({
+  init: {
+    width: '10px',
+    height: '10px',
+    boxShadow: '0px 0px 0px rgba(0,0,0,0)'
+  }
+})
+
 const CircleStyled = styled(Circle)`
   background-image: url(${({ img }) => img});
   background-size: cover;
@@ -67,10 +75,17 @@ const SecondCircleStyled = styled(Circle2)`
   width: 50px;
   height: 50px;
   border-radius: 9999px;
-  border: 2px solid #DC2A38
+  border: 2px solid #121534
   display: inline-block;
   font-size: 1.2rem;
   clip-path: polygon(49% 100%, 100% 24%, 100% 0%, 1% 0%, 0% 25%);
+`
+
+const ThirdCircleStyled = styled(Circle3)`
+  background-color: #121534;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px; 
 `
 
 export const CircleImagePose = ({image, title}) => {
@@ -86,5 +101,13 @@ export const SecondCircleImagePose = ({image, title}) => {
     <Tooltip disableFocusListener disableTouchListener title={title} placement="top">
       <SecondCircleStyled pose={'init'} img={image}/>
     </Tooltip>
+  )
+}
+
+export const ThirdCirclePose = ({ title }) => {
+  return(
+   <Tooltip disableFocusListener disableTouchListener title={title} placement="top">
+      <ThirdCircleStyled />
+   </Tooltip> 
   )
 }

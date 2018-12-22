@@ -16,6 +16,7 @@ import Grid from '@material-ui/core/Grid'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Search from '@material-ui/icons/Search'
 import { connect } from 'react-redux'
+import { CONVERT_TIMESTAMP } from '../../../../services'
 
 const styles = theme => ({
   root: {
@@ -47,13 +48,13 @@ class Mensaje extends Component {
   }
 
   componentDidMount() {
-    (!this.props.worker.details.mensajes)
+    (!this.props.worker.details.sms)
       ? this.setState({nulo: 'nulo'})
       : this.setState({
-      messagesSent: Object.values(this.props.worker.details.mensajes).filter(mensaje => { 
-      return mensaje.status === 'enviado'}),
-      messagesReceived: Object.values(this.props.worker.details.mensajes).filter(mensaje => { 
-        return mensaje.status === 'recibido'})
+      messagesSent: Object.values(this.props.worker.details.sms).filter(mensaje => { 
+      return mensaje.estatus.toLowerCase() === 'enviado'}),
+      messagesReceived: Object.values(this.props.worker.details.sms).filter(mensaje => { 
+        return mensaje.estatus.toLowerCase() === 'recibido'})
       })
     
   }
@@ -133,9 +134,9 @@ class Mensaje extends Component {
                 <div key={index}>
                   <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography className={classes.heading}>{message.number}</Typography>
+                      <Typography className={classes.heading}>{message.numero}</Typography>
                       <Typography className={classes.secondaryHeading}>{this.bodyMessageSubstring(message.body)}</Typography>
-                      <Typography className={classes.ternaryHeading}>{message.date}</Typography>
+                      <Typography className={classes.ternaryHeading}>{CONVERT_TIMESTAMP(message.fecha)}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography>
@@ -176,7 +177,7 @@ class Mensaje extends Component {
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography className={classes.heading}>{message.number}</Typography>
                       <Typography className={classes.secondaryHeading}>{this.bodyMessageSubstring(message.body)}</Typography>
-                      <Typography className={classes.ternaryHeading}>{message.date}</Typography>
+                      <Typography className={classes.ternaryHeading}>{CONVERT_TIMESTAMP(message.date)}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography>

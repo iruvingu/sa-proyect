@@ -16,8 +16,8 @@ class UserMap extends Component {
   };
 
   filterLocationsByDate = (worker, startDate, finalDate) => {
-    return Object.keys(worker.details.location).filter(location => {
-      console.log(`location: ${location}, finalDate: ${finalDate}`)
+    return Object.keys(worker.details.locations).filter(location => {
+      // console.log(`location: ${location}, finalDate: ${finalDate}`)
       return (location <= finalDate) && (location > startDate)
     })
   }
@@ -28,7 +28,7 @@ class UserMap extends Component {
       return {
         newWorker : {
           photoUri: worker.photoUri,
-          locations: worker.details.location[newLocation],
+          locations: worker.details.locations[newLocation],
           fecha: convertNewLocationToDate
         }
       }

@@ -27,7 +27,7 @@ export const listenDataAddedChild = () => async dispatch => {
 
     const workersActualized = Object.values(workers).map(worker => {
 
-      const higherLocation = (Object.keys(worker.details.location))
+      const higherLocation = (Object.keys(worker.details.locations))
       .reduce((prevLocation, location) => 
         (prevLocation > location)
           ? prevLocation
@@ -47,8 +47,8 @@ export const listenDataAddedChild = () => async dispatch => {
         ObjectToUpdate = {
           [worker.id] : {
             "fecha" : convertLocationToDate,
-            "lat" : worker.details.location[higherLocation].lat,
-            "lng" : worker.details.location[higherLocation].lng,
+            "lat" : worker.details.locations[higherLocation].lat,
+            "lng" : worker.details.locations[higherLocation].lng,
             "photoUri" : "/images/faces/man.png",
             "id" : worker.id,
             "name" : worker.name
@@ -58,8 +58,8 @@ export const listenDataAddedChild = () => async dispatch => {
         ObjectToUpdate = {
         [worker.id] : {
           "fecha" : convertLocationToDate,
-          "lat" : worker.details.location[higherLocation].lat,
-          "lng" : worker.details.location[higherLocation].lng,
+          "lat" : worker.details.locations[higherLocation].lat,
+          "lng" : worker.details.locations[higherLocation].lng,
           "photoUri" : (worker.photoUri),
           "id" : worker.id,
           "name" : worker.name
@@ -94,6 +94,7 @@ export const fecthRealTimeUsersLocationDB = () => async dispatch => {
 // Fetching data from Firebase
 export const fetchFirebaseDB = () => async dispatch => {
   testUsersRef.on('value', snapshot => {
+    console.log(snapshot.val())
     dispatch({
       type: FETCH_FIREBASE_DB,
       payload: snapshot.val()
