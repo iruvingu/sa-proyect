@@ -3,6 +3,8 @@ import GoogleMapReact from 'google-map-react'
 import { MAP_API_KEY } from '../../constants/helpers'
 
 import {CircleImagePose} from './CircleImagePose'
+import { K_SIZE } from './greatPlaceStyle'
+// import Marker from './Marker'
 
 class MapContainer extends Component {
   static defaultProps = {
@@ -52,7 +54,7 @@ class MapContainer extends Component {
           bootstrapURLKeys={{ key: MAP_API_KEY }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
-          hoverDistance={40}
+          hoverDistance={K_SIZE / 2}
           options={this.createMapOptions}
           onChildMouseEnter={this._onChildMouseEnter}
         >

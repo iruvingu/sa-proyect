@@ -9,8 +9,8 @@ import Periodo from './Periodo'
 
 const createDate = val => (
   (val)
-    ? (moment(new Date()).format('YYYY-MM-DD hh:mm:ss'))
-    : (moment(new Date()).add(-1, 'days').format('YYYY-MM-DD hh:mm:ss'))
+    ? (moment(new Date()).format('YYYY-MM-DD'))
+    : (moment(new Date()).add(-1, 'days').format('YYYY-MM-DD'))
 )
 const today = createDate(1)
 const yesterday = createDate()
@@ -22,11 +22,11 @@ class UserInfo extends Component {
     finalDate: today
   }
 
-  myCallbackStart = (dataFromChild) => {
+  myCallbackStart = async(dataFromChild) => {
     this.setState({startDate: dataFromChild})
   }
 
-  myCallbackEnd = (dataFromChild) => {
+  myCallbackEnd = async(dataFromChild) => {
     this.setState({finalDate: dataFromChild})
   }
 
@@ -98,13 +98,17 @@ class UserInfo extends Component {
               style={{
                 minWidth: '100%'
                 }}>
-              <Box>
+              <Box
+                flex
+                align='center'>
                 <div>Periodo desde: </div>
               </Box>
               <Box>
                 <Periodo defaultValue={yesterday} callBackFromParent={this.myCallbackStart} />
               </Box>
-              <Box>
+              <Box
+              flex
+              align='center'>
                 <div>hasta: </div>
               </Box>
               <Box>

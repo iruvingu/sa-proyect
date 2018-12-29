@@ -3,9 +3,17 @@ import GoogleMapReact, {google} from 'google-map-react'
 import { MAP_API_KEY } from '../../../../constants/helpers'
 import { CONVERT_DATE_TO_TIMESTAMP, CONVERT_TIMESTAMP } from '../../../../services'
 
-import {CircleImagePose, SecondCircleImagePose} from '../../../maps/CircleImagePose'
+import {CircleImagePose, SecondCircleImagePose, ThirdCirclePose} from '../../../maps/CircleImagePose'
+import Polyline from './Polyline'
 
 class UserMap extends Component {
+
+  state = {
+    map: {},
+    maps: {},
+    mapLoaded: false,
+    newUser: {}
+  } 
 
   static defaultProps = {
     center: {
@@ -15,6 +23,11 @@ class UserMap extends Component {
     zoom: 8
   };
 
+  componentDidMount() {
+    
+  }
+
+  // Returns the new locations as the key name, not the entire object
   filterLocationsByDate = (worker, startDate, finalDate) => {
     return Object.keys(worker.details.locations).filter(location => {
       // console.log(`location: ${location}, finalDate: ${finalDate}`)
@@ -22,6 +35,7 @@ class UserMap extends Component {
     })
   }
 
+  // 
   checkPositions = (worker, newLocations) => {
     return newLocations.map(newLocation => {
       const convertNewLocationToDate = CONVERT_TIMESTAMP(newLocation)
@@ -60,7 +74,7 @@ class UserMap extends Component {
           lng={newWorker.newWorker.locations.lng}
           style={{cursor: 'pointer'}}
         >
-          <CircleImagePose
+          <ThirdCirclePose
             image={newWorker.newWorker.photoUri}
             title={newWorker.newWorker.fecha}
           />
@@ -71,13 +85,21 @@ class UserMap extends Component {
 
   render() {
     const { worker, startDate, finalDate } = this.props
+
+    // Converting the date into timeStamp (This might not be necessary tho)
     const initDate = CONVERT_DATE_TO_TIMESTAMP(startDate)
     const finDate = CONVERT_DATE_TO_TIMESTAMP(finalDate)
+
+    // Filter locations by specific dates by giving the worker's locations
+    // and the initial and final date.
     const newLocations = this.filterLocationsByDate(worker, initDate, finDate)
+
+    // Asigning a new user with the new positions to use
     const newUser = this.checkPositions(worker, newLocations)
 
-    // console.log(newUser)
-
+    // this.setState({newUser})
+    // console.log(this.state.newUser)
+    console.log(this.props)
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -86,9 +108,20 @@ class UserMap extends Component {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
           hoverDistance={20}
+          onGoogleApiLoaded={({map, maps}) => {this.setState({map, maps, mapLoaded: true })}}
+          yesIWantToUseGoogleMapApiInternals
         >
-          {this.markerPosition(newUser, this.props)}
+          {/* {this.markerPosition(newUser, this.props)} */}
         </GoogleMapReact>
+        { 
+          this.state.mapLoaded && 
+          <Polyline 
+            map={this.state.map}
+            maps={this.state.maps}
+            worker={this.props.worker}
+            newUser={newUser}  
+          />
+        }
       </div>
     );
   }

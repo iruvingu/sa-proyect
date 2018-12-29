@@ -46,8 +46,8 @@ const Circle2 = posed.div({
 
 const Circle3 = posed.div({
   init: {
-    width: '10px',
-    height: '10px',
+    width: '3px',
+    height: '3px',
     boxShadow: '0px 0px 0px rgba(0,0,0,0)'
   }
 })
@@ -83,8 +83,8 @@ const SecondCircleStyled = styled(Circle2)`
 
 const ThirdCircleStyled = styled(Circle3)`
   background-color: #121534;
-  width: 10px;
-  height: 10px;
+  width: 3px;
+  height: 3px;
   border-radius: 9999px; 
 `
 
