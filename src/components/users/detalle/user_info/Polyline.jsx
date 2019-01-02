@@ -2,8 +2,22 @@ import React, { Component } from 'react'
 
 class Polyline extends Component {
 
+  state = {
+    path: {}
+  } 
+
+  componentDidMount() {
+    if (this.props.newUser === []){
+      this.setState({path: lat)
+    }
+  }
+
   getPaths() {
-    const { worker } = this.props
+    const { worker, newUser } = this.props
+
+    if(newUser === undefined){
+      console.log('No hay newUser')
+    }
 
     return Object.values(worker.details.locations).map(location => {
       return (
@@ -18,6 +32,7 @@ class Polyline extends Component {
     const paths = { path: this.getPaths() }
     // console.log(paths)
     console.log(this.props.newUser)
+    console.log(this.props.worker)
 
     this.line = new Polyline(Object.assign({}, renderedPolyline, paths))
 

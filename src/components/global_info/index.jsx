@@ -41,7 +41,7 @@ class Global extends Component {
             flex
             align='center'
             mx={1}>
-              <Typography variant='h6'>
+              <Typography variant='subtitle1'>
                 Usuarios desconectados por más de
               </Typography>
               
@@ -56,17 +56,17 @@ class Global extends Component {
                 }}
               >
                 <MenuItem value={1}>
-                  <Typography variant='h6'>
+                  <Typography variant='subtitle1'>
                     1 hr
                   </Typography>
                 </MenuItem>
                 <MenuItem value={6}>
-                  <Typography variant='h6'>
+                  <Typography variant='subtitle1'>
                     6 hrs
                   </Typography>
                 </MenuItem>
                 <MenuItem value={12}>
-                  <Typography variant='h6'>
+                  <Typography variant='subtitle1'>
                     12 hrs
                   </Typography>
                 </MenuItem>

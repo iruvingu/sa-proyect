@@ -67,19 +67,6 @@ class UserMap extends Component {
             />
           </div>)
       }
-      return (
-        <div
-          key={i}
-          lat={newWorker.newWorker.locations.lat}
-          lng={newWorker.newWorker.locations.lng}
-          style={{cursor: 'pointer'}}
-        >
-          <ThirdCirclePose
-            image={newWorker.newWorker.photoUri}
-            title={newWorker.newWorker.fecha}
-          />
-        </div>
-      )
     })
   }
 
@@ -99,7 +86,7 @@ class UserMap extends Component {
 
     // this.setState({newUser})
     // console.log(this.state.newUser)
-    console.log(this.props)
+    // console.log(this.props)
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -111,7 +98,7 @@ class UserMap extends Component {
           onGoogleApiLoaded={({map, maps}) => {this.setState({map, maps, mapLoaded: true })}}
           yesIWantToUseGoogleMapApiInternals
         >
-          {/* {this.markerPosition(newUser, this.props)} */}
+          {this.markerPosition(newUser)}
         </GoogleMapReact>
         { 
           this.state.mapLoaded && 

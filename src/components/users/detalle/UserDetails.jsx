@@ -22,7 +22,7 @@ import Saludo from './saludo'
 
 import { Link, Route, Switch } from 'react-router-dom'
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const styles = theme => ({
   root: {
@@ -106,14 +106,14 @@ class UserDetails extends Component {
               >
                 <ListItemIcon>
                   {index === 0
-                    ? <PersonPin />
+                    ? <PersonPin color='secondary' />
                     : index === 1
-                      ? <ContactPhone />  
+                      ? <ContactPhone color='secondary'/>
                       : index === 2
-                        ? <Sms />
+                        ? <Sms color='primary.dark' />
                         : index === 3
-                          ? <Phone />
-                          : <Home />
+                          ? <Phone color='secondary'/>
+                          : <Home color='primary'/>
                   }
                 </ListItemIcon>
                 <ListItemText primary={text} />
