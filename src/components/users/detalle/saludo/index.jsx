@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
 import { Paper, Typography } from '@material-ui/core'
+import { Avatar } from '@material-ui/core'
+import { connect } from 'react-redux'
 
 class Saludo extends Component {
   render() {
+    const { worker } = this.props
     return(
       <Flex
       w={1}
@@ -15,17 +18,11 @@ class Saludo extends Component {
         >
           <Paper elevation={2} >
             <Box
-            p={2}>
-              <Typography variant="h5" style={{borderBottom: `1px dotted rgba(0, 0, 0, 0.4)`}}>
-                Bienvenid@
-              </Typography>
-              <Box
-                my={2}
-              >
-                
-              </Box>
+            p={2}
+            flex
+            justify='center'>
+              <Avatar style={{width: 120, height: 120}} src={worker.photoUri} />                
             </Box>
-            
           </Paper>
         </Box>
       </Flex>
@@ -33,4 +30,10 @@ class Saludo extends Component {
   }
 }
 
-export default Saludo
+const mapStateToProps = ({ worker }) => {
+  return ({
+    worker: worker.worker
+  })
+}
+
+export default connect(mapStateToProps, null)(Saludo)

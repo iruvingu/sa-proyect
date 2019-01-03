@@ -31,11 +31,11 @@ class Global extends Component {
 
     return(
       <Flex
-      style={{width: '100%'}}
+      style={{width: '100%', backgroundColor: '#f9f6f2'}}
       m={1}
       >
         <Paper
-        style={{width: '100%'}}>
+        style={{width: '100%', backgroundColor: '#fdf3e0'}}>
           <Flex>
             <Box
             flex

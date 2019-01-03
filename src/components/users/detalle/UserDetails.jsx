@@ -2,9 +2,12 @@ import React, { Component} from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, Divider, ListItem, ListItemIcon, ListItemText, Fab } from '@material-ui/core';
-
-import IconButton from '@material-ui/core/IconButton';
+import { Flex, Box } from 'reflexbox';
+import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, 
+  Divider, ListItem, ListItemIcon, ListItemText, Tooltip, IconButton,
+  Menu, MenuItem, Button } from '@material-ui/core';
+import { connect } from 'react-redux'
+import { Link, Route, Switch } from 'react-router-dom'
 /**
  * icons
  */
@@ -20,7 +23,7 @@ import Contacts from './contacts/Contacts'
 import Calls from './calls/Calls'
 import Saludo from './saludo'
 
-import { Link, Route, Switch } from 'react-router-dom'
+import views from './settings'
 
 const drawerWidth = 200;
 
@@ -52,7 +55,8 @@ const styles = theme => ({
 class UserDetails extends Component {
   state = {
     open: false,
-    selectedIndex: 0,
+    selectedIndex: null,
+    anchorEl: null,
   };
 
   // Change the index of the selected item
@@ -60,10 +64,17 @@ class UserDetails extends Component {
     this.setState({ selectedIndex: index });
   };
 
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
 
   render() {
     const { classes, theme } = this.props;
-
+    const { anchorEl } = this.state
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -72,18 +83,50 @@ class UserDetails extends Component {
           className={classes.appBar}
         >
           <Toolbar>
-            <Fab
-              size="small"
-              color="primary"
-              className={classNames(classes.menuButton)}
-            >
-              <Link to="/">
-                <ArrowBack />
-              </Link>
-            </Fab>
-            <Typography variant="h6" color="inherit" noWrap>
-              Información del Usuario
-            </Typography>
+            <Flex
+             w={1}
+             align='center'
+             justify='space-between'>
+              <Box
+              flex
+              align='center'>
+                <Tooltip title='Regresar a inicio'>
+                  <IconButton
+                  component={Link}
+                  to='/'
+                  style={{ margin: '0 10px' }}>
+                    <ArrowBack />
+                  </IconButton>
+                </Tooltip>
+                <Flex
+                    column
+                    justify='flex-start'
+                  >
+                    <Typography style={{ color: 'white' }} variant='title'>
+                      Administración
+                    </Typography>
+                    <Typography style={{ color: 'white' }} variant='caption'>
+                      Panel de control
+                    </Typography>
+                  </Flex>
+              </Box>
+              <Box>
+                <Button
+                aria-owns={anchorEl ? 'simple-menu' : undefined}
+                aria-haspopup="true"
+                onClick={this.handleClick}>
+                  Administrador
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+                </Menu>
+              </Box>
+            </Flex>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -96,27 +139,29 @@ class UserDetails extends Component {
           <div className={classes.toolbar} />
             <List>
             {['Usuario', 'Contactos', 'SMS', 'Llamadas'].map((text, index) => (
-              <ListItem 
+              <ListItem
                 button
                 key={text}
                 component={Link}
-                to={`/user/detail/${text}`}
+                to={{pathname: `/user/detail/${text}`}}
                 selected={this.state.selectedIndex === index}
                 onClick={event => this.handleListItemClick(event, index)}
               >
-                <ListItemIcon>
+                <ListItemIcon style={{marginRight: '0px'}}>
                   {index === 0
                     ? <PersonPin color='secondary' />
                     : index === 1
                       ? <ContactPhone color='secondary'/>
                       : index === 2
-                        ? <Sms color='primary.dark' />
+                        ? <Sms color='secondary' />
                         : index === 3
                           ? <Phone color='secondary'/>
                           : <Home color='primary'/>
                   }
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText>
+                  <Typography>{text}</Typography>
+                </ListItemText>
               </ListItem>
             ))}
           </List>
@@ -125,14 +170,14 @@ class UserDetails extends Component {
             {['Inicio'].map((text, index) => (
               <ListItem button key={text} component={Link}
               to='/'>
-                <ListItemIcon><Home /></ListItemIcon>
+                <ListItemIcon style={{marginRight: '0px'}}><Home color='primary'  /></ListItemIcon>
                 <ListItemText primary={text} />
               </ListItem>
             ))}
           </List>       
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
+        <main className={classes.content} style={{backgroundColor: '#f9f6f2'}}>
+          <div className={classes.toolbar} style={{backgroundColor: '#f9f6f2'}} />
             <Switch>
               <Route path='/user/detail/Usuario' component={UserInfo}/>
               <Route path='/user/detail/Contactos' component={Contacts}/>
@@ -151,4 +196,12 @@ UserDetails.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(UserDetails);
+const UserDetailsWithStyles = withStyles(styles, { withTheme: true })(UserDetails);
+
+const MapStateToProps = ({ auth }) => {
+  return ({
+    auth
+  })
+}
+
+export default connect(MapStateToProps, null)(UserDetailsWithStyles)

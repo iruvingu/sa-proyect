@@ -7,9 +7,9 @@ class Polyline extends Component {
   } 
 
   componentDidMount() {
-    if (this.props.newUser === []){
-      this.setState({path: lat)
-    }
+    // if (this.props.newUser === []){
+    //   this.setState({path: lat)
+    // }
   }
 
   getPaths() {

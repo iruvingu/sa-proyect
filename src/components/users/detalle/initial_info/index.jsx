@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
 import Typography from '@material-ui/core/Typography'
 
-class DeviceInfo extends Component {
+class GeneralInfo extends Component {
   render = () => {
     return (
       <div
@@ -31,4 +31,4 @@ class DeviceInfo extends Component {
   }
 }
 
-export default DeviceInfo
+export default GeneralInfo

@@ -84,12 +84,11 @@ class ClippedDrawer extends Component {
           {/* <SomeUsers /> */}
           <FirebaseUsers />
         </Drawer>
-        <main className={classes.content}>
+        <main className={classes.content} style={{backgroundColor: '#f9f6f2'}}>
           <div className={classes.toolbar} />
           <div >
             <Flex
             style={{height: '50%',
-            background: '#DCDCDC',
             borderRadius: '5px'}}
             column
             justify='space-between'
