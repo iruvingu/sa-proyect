@@ -44,11 +44,11 @@ class UserInfo extends Component {
         <Paper>
            <Box
           flex
-          justify='center'
-          align='center'
+          justify='end'
+          align='end'
           style={{height: 'auto',}}>
             <Flex
-            justify='space-around'
+            justify='start'
             style={{
             minWidth: '100%'
             }}
