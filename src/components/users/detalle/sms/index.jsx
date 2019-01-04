@@ -136,7 +136,7 @@ class Mensaje extends Component {
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography className={classes.heading}>{message.numero}</Typography>
                       <Typography className={classes.secondaryHeading}>{this.bodyMessageSubstring(message.body)}</Typography>
-                      <Typography className={classes.ternaryHeading}>{CONVERT_TIMESTAMP(message.fecha)}</Typography>
+                      <Typography className={classes.ternaryHeading}>{CONVERT_TIMESTAMP(message.date)}</Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <Typography>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Drawer, AppBar, CssBaseline, Toolbar, Typography } from '@material-ui/core'
+import { Drawer, AppBar, CssBaseline, Toolbar, Typography,
+  Avatar, MenuList, MenuItem, ClickAwayListener, Grow,
+  Paper, Popper, Button } from '@material-ui/core'
 import { Flex, Box } from 'reflexbox'
 import styled from 'styled-components'
 import { connect } from 'react-redux';
@@ -43,14 +45,32 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    overflowX: 'hidden'
   },
   toolbar: theme.mixins.toolbar,
 });
 
 class ClippedDrawer extends Component {
+  state = {
+    open: false
+  }
+
+  handleToggle = () => {
+    this.setState(state => ({ open: !state.open }));
+  };
+
+  handleClose = event => {
+    if (this.anchorEl.contains(event.target)) {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
 
   render() {
-    const { classes } = this.props;
+    const { classes, auth } = this.props;
+    const { open } = this.state;
+    // console.log(auth)
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -59,16 +79,51 @@ class ClippedDrawer extends Component {
             <Flex
             style={{width: '100%'}}
             flex
-            justify='space-between'>
-              <Box>
+            justify='space-between'
+            >
+              <Box
+                flex
+                justify='start'>
                 <Typography variant="h6" color="inherit" noWrap>
                   SA Project
                 </Typography>
               </Box>
-              <Box>
-                <StyledButton onClick={this.props.signOut}>
-                  Logout
-                </StyledButton>
+              <Box
+              flex
+              justify='end'>
+                <Box>
+                  <Avatar style={{width: '30', height: '30',}} src={auth.photoURL} />
+                </Box>
+                
+                <Button
+                  buttonRef={node => {
+                    this.anchorEl = node;
+                  }}
+                  aria-owns={open ? 'menu-list-grow' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleToggle}
+                >
+                  <Typography style={{ color: 'white' }} variant='caption'>
+                      {auth.displayName}
+                  </Typography>
+                </Button>
+                <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      id="menu-list-grow"
+                      style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={this.handleClose}>
+                          <MenuList>
+                            <MenuItem onClick={this.props.signOut}>Logout</MenuItem>
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
               </Box>
             </Flex>
           </Toolbar>
@@ -81,7 +136,6 @@ class ClippedDrawer extends Component {
           }}
         >
           <div className={classes.toolbar} />
-          {/* <SomeUsers /> */}
           <FirebaseUsers />
         </Drawer>
         <main className={classes.content} style={{backgroundColor: '#f9f6f2'}}>
@@ -123,4 +177,8 @@ ClippedDrawer.propTypes = {
 
 const HomeComponent = withStyles(styles)(ClippedDrawer);
 
-export default connect(null, actions)(HomeComponent)
+const mapStateToProps = ({ auth }) => {
+  return ({ auth })
+}
+
+export default connect(mapStateToProps, actions)(HomeComponent)

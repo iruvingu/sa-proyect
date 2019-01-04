@@ -67,6 +67,17 @@ class UserMap extends Component {
             />
           </div>)
       }
+      return (<div
+        key={i}
+        lat={newWorker.newWorker.locations.lat}
+        lng={newWorker.newWorker.locations.lng}
+        style={{cursor: 'pointer'}}
+      >
+        <CircleImagePose
+          image={newWorker.newWorker.photoUri}
+          title={newWorker.newWorker.fecha}
+        />
+      </div>)
     })
   }
 
@@ -100,15 +111,6 @@ class UserMap extends Component {
         >
           {this.markerPosition(newUser)}
         </GoogleMapReact>
-        { 
-          this.state.mapLoaded && 
-          <Polyline 
-            map={this.state.map}
-            maps={this.state.maps}
-            worker={this.props.worker}
-            newUser={newUser}  
-          />
-        }
       </div>
     );
   }

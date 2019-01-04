@@ -23,6 +23,12 @@ class Saludo extends Component {
             justify='center'>
               <Avatar style={{width: 120, height: 120}} src={worker.photoUri} />                
             </Box>
+            <Box
+            m={1}>
+              <Typography>
+                {worker.info}
+              </Typography>
+            </Box>
           </Paper>
         </Box>
       </Flex>

@@ -115,7 +115,9 @@ class UserDetails extends Component {
                 aria-owns={anchorEl ? 'simple-menu' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleClick}>
-                  Administrador
+                  <Typography style={{ color: 'white' }} variant='caption'>
+                    Administrador
+                  </Typography>
                 </Button>
                 <Menu
                   id="simple-menu"
