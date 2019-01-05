@@ -50,10 +50,10 @@ class UserMap extends Component {
   }
 
   markerPosition = (newWorkers) => {
+    const newWorkersLen = newWorkers.length;
     return (newWorkers).map((newWorker,i) => {
       // console.log(newWorker.newWorker.locations)
-      // console.log(i)
-      if (i === 0)
+      if (i === 0 || i === (newWorkersLen - 1))
          { 
          return (<div
             key={i}
@@ -73,8 +73,7 @@ class UserMap extends Component {
         lng={newWorker.newWorker.locations.lng}
         style={{cursor: 'pointer'}}
       >
-        <CircleImagePose
-          image={newWorker.newWorker.photoUri}
+        <ThirdCirclePose
           title={newWorker.newWorker.fecha}
         />
       </div>)
@@ -83,7 +82,8 @@ class UserMap extends Component {
 
   render() {
     const { worker, startDate, finalDate } = this.props
-
+    console.log(startDate)
+    console.log(finalDate)
     // Converting the date into timeStamp (This might not be necessary tho)
     const initDate = CONVERT_DATE_TO_TIMESTAMP(startDate)
     const finDate = CONVERT_DATE_TO_TIMESTAMP(finalDate)
@@ -95,9 +95,7 @@ class UserMap extends Component {
     // Asigning a new user with the new positions to use
     const newUser = this.checkPositions(worker, newLocations)
 
-    // this.setState({newUser})
-    // console.log(this.state.newUser)
-    // console.log(this.props)
+    console.log(newUser)
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>

@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
 import { Avatar, Typography, Paper } from '@material-ui/core';
-import { MuiPickersUtilsProvider,
-  TimePicker,
-  DatePicker } from 'material-ui-pickers'
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers'
 import MomentUtils from '@date-io/moment';
 import moment from 'moment'
+import { es } from 'date-fns/locale';
 import UserMap from './UserMap'
 import { connect } from 'react-redux'
 
 import Periodo from './Periodo'
 
+// const es = moment.locale('es')
+
 const createDate = val => (
   (val)
-    ? (moment(new Date()).format('YYYY-MM-DDThh:mm:ss'))
-    : (moment(new Date()).add(-1, 'days').format('YYYY-MM-DDThh:mm:ss'))
+    ? (moment(new Date()).format('YYYY-MM-DD hh:mm:ss'))
+    : (moment(new Date()).add(-15, 'minutes').format('YYYY-MM-DD hh:mm:ss'))
 )
 const today = createDate(1)
 const yesterday = createDate()
@@ -35,12 +36,16 @@ class UserInfo extends Component {
   }
 
   handleDateChange = date => {
-    this.setState({ finalDate: date });
+    this.setState({ startDate: date });
   };
+
+  handleDateChange2 = date => {
+    this.setState({ finalDate: date })
+  }
 
   render() {
     const { worker } = this.props
-    const { finalDate } = this.state
+    const { startDate, finalDate } = this.state
     // console.log(this.state.startDate)
     // console.log(this.state.finalDate)
     return (
@@ -52,12 +57,11 @@ class UserInfo extends Component {
         >
           <Box
           flex
-          w={1/2}
           style={{width: '100%'}}>
             <Box
             flex
-            w={1/2}
-            style={{height: '130px'}}>
+            w={1/4}
+            style={{height: 'auto'}}>
             <Paper
             style={{width: 'auto', background: '#EEF5FA'}}>
               <Box
@@ -74,7 +78,7 @@ class UserInfo extends Component {
                   <Box
                   m={1}>
                     <div>
-                      <Avatar alt="Nombre Usuario" src={worker.photoUri} style={{width: 110,height: 110,}} />
+                      <Avatar alt="Nombre Usuario" src={worker.photoUri} style={{width: 80,height: 80,}} />
                     </div>
                   </Box>
                   <Box
@@ -84,9 +88,9 @@ class UserInfo extends Component {
                   minWidth: 'auto'
                   }}>
                     <Box>
-                      <Typography variant="subtitle2" gutterBottom>Nombre: {worker.name}</Typography>
+                      <Typography variant="subtitle2" gutterBottom>{worker.name}</Typography>
                     </Box>
-                    <Box>
+                    {/* <Box>
                       <Typography variant="subtitle2" gutterBottom>IMEI: {worker.device.IMEI}</Typography>
                     </Box>
                     <Box>
@@ -94,19 +98,72 @@ class UserInfo extends Component {
                     </Box>
                     <Box>
                       <Typography variant="subtitle2" gutterBottom>Signal: {worker.device.signal}</Typography>
-                    </Box>
+                    </Box> */}
                   </Box>
                 </Flex>
-
               </Box>      
             </Paper>
             </Box>
+            
             <Box
-          flex
-          w={1/2}
-          justify='flex-end'
-          style={{height: 'auto'}}>
-            <Paper style={{width: 'auto'}}>
+            m={1}
+            w={1/4}>
+              <Paper style={{width: 'auto', background: '#EEF5FA'}}>
+                <Flex
+                m={1}
+                flex
+                column>
+                  <Box>
+                  <div>IMEI</div>
+                  </Box>
+                  <Box>
+                  <div>{worker.device.IMEI}</div>
+                  </Box>
+                </Flex>
+              </Paper>
+            </Box>
+            <Box
+            m={1}
+            w={1/4}>
+              <Paper style={{width: 'auto', background: '#EEF5FA'}}>
+              <Flex
+                m={1}
+                flex
+                column>
+                  <Box>
+                  <div>Bateria</div>
+                  </Box>
+                  <Box>
+                  <div>{worker.device.batery}</div>
+                  </Box>
+                </Flex>
+              </Paper>
+            </Box>
+            <Box
+            m={1}
+            w={1/4}>
+              <Paper style={{width: 'auto', background: '#EEF5FA'}}>
+              <Flex
+                m={1}
+                flex
+                column>
+                  <Box>
+                  <div>Señal</div>
+                  </Box>
+                  <Box>
+                  <div>{worker.device.signal}</div>
+                  </Box>
+                </Flex>
+              </Paper>
+            </Box>
+          </Box>
+          <Box
+            my={1}
+            flex
+            w={1/2}
+            justify='flex-start'
+            style={{height: 'auto'}}>
+              <Paper style={{width: 'auto'}}>
               <Flex
               flex
               m={1}
@@ -129,11 +186,11 @@ class UserInfo extends Component {
                   </Typography>
                 </Box>
                 <Box>
-                  <MuiPickersUtilsProvider utils={MomentUtils} locale=''>
+                  <MuiPickersUtilsProvider utils={MomentUtils} locale={es}>
                     <DatePicker
                       margin="normal"
                       autoOk={true}
-                      value={finalDate}
+                      value={startDate}
                       format="DD/MM/YYYY"
                       onChange={this.handleDateChange} />
                   </MuiPickersUtilsProvider>
@@ -146,11 +203,25 @@ class UserInfo extends Component {
                   </Typography>
                 </Box>
                 <Box>
-                 
+                  <MuiPickersUtilsProvider utils={MomentUtils} locale='es'>
+                    <TimePicker
+                      margin="normal"
+                      autoOk={true}
+                      value={startDate}
+                      onChange={this.handleDateChange} />
+                  </MuiPickersUtilsProvider>
+                </Box>
+                <Box>
+                  <MuiPickersUtilsProvider utils={MomentUtils} locale='es'>
+                    <TimePicker
+                      margin="normal"
+                      autoOk={true}
+                      value={finalDate}
+                      onChange={this.handleDateChange2} />
+                  </MuiPickersUtilsProvider>
                 </Box>
               </Flex>
             </Paper>
-          </Box>
           </Box>
           <Box
           mb={2}

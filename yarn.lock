@@ -713,6 +713,12 @@
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@date-io/core/-/core-0.0.2.tgz#35be27d26eb652e752ccfbffe624c95169200dbd"
 
+"@date-io/date-fns@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@date-io/date-fns/-/date-fns-0.0.2.tgz#1604546d080707b73185a135db197598cfd16e6d"
+  dependencies:
+    "@date-io/core" "^0.0.2"
+
 "@date-io/moment@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@date-io/moment/-/moment-0.0.2.tgz#2020055c214fe5da7a6fc4741ebcb6a622ead6da"
@@ -2685,6 +2691,10 @@ data-urls@^1.0.0, data-urls@^1.0.1:
     abab "^2.0.0"
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
+
+date-fns@2.0.0-alpha.25:
+  version "2.0.0-alpha.25"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.25.tgz#651a5d1f59a01af6cf0371e39b2ae29df5d521ee"
 
 date-now@^0.1.4:
   version "0.1.4"
