@@ -1,7 +1,13 @@
-import { testUsersRef, realTimeUsersRef, authRef, googleAuthProvider, usersBranchRef } from '../firebase_handler/firebase'
+import { testUsersRef, realTimeUsersRef, authRef,
+  googleAuthProvider, usersBranchRef, timeRef } from '../firebase_handler/firebase'
 import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER,
-  FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD, SET_MARKER } from './type'
+  FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD, SET_MARKER, SET_TIME } from './type'
 import { CONVERT_TIMESTAMP } from '../services'
+
+// Set time to firebase
+export const setTimeToFB = (time) =>  async dispatch => {
+  timeRef.child('time_location').push(time)
+}
 
 // Hover a marker
 export const woverMarker = (markerId) => dispatch => {

@@ -12,7 +12,8 @@ class Saludo extends Component {
       w={1}
       align='baseline'
       justify='center'
-      mb={3}>
+      mb={3}
+      style={{height: '78vh'}}>
         <Box
         w={[1, 10 / 12, 8 / 12]}
         >

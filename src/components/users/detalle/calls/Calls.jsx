@@ -53,7 +53,14 @@ class Calls extends React.Component {
     justify='center'>
       <Box>
         <Paper className={classes.root}>
-        <Typography variant={'h6'}>Llamadas recientes</Typography>
+        <Flex
+        column>
+          <Box
+          m={1}>
+            <Typography variant={'h6'}>Llamadas recientes</Typography>
+          </Box>
+          <Box
+          m={1}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
@@ -67,7 +74,7 @@ class Calls extends React.Component {
             <TableBody>
               {
                 (worker.details.calls === undefined)
-                  ? <div>No hay llamadas aún</div>
+                  ? <Box my={1}>No hay llamadas aún</Box>
                   : Object.values(worker.details.calls)
                     .filter(call => 
                     ((call) === null)
@@ -88,6 +95,8 @@ class Calls extends React.Component {
               }
             </TableBody>
           </Table>
+          </Box>
+        </Flex>
         </Paper>
       </Box>
     </Flex>

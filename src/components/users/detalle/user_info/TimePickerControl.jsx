@@ -1,6 +1,6 @@
 import React from 'react'
 import { withStyles, Grow, FormHelperText, InputAdornment } from '@material-ui/core'
-import Styles from './styles/timepicker'
+import Styles from './timepicker'
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers'
 import MomentUtils from '@date-io/moment';
 
@@ -34,6 +34,7 @@ const TimePickerControlled = ({
         ? <DatePicker
           {...props}
           {...customProps}
+          autoOk
           value={props.value || null}
         />
         : type === 'time'

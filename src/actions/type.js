@@ -9,3 +9,5 @@ export const SET_WORKER = 'SET_WORKER'
 export const LISTEN_ADDED_DATA_TO_CHILD = 'LISTEN_ADDED_DATA_TO_CHILD'
 
 export const SET_MARKER = 'SET_MARKER'
+
+export const SET_TIME = 'SET_TIME'

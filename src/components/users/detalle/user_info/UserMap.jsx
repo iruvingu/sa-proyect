@@ -35,7 +35,7 @@ class UserMap extends Component {
     })
   }
 
-  // 
+  // Returns the new worker Object with 3 childrens photoUri, locations and fecha
   checkPositions = (worker, newLocations) => {
     return newLocations.map(newLocation => {
       const convertNewLocationToDate = CONVERT_TIMESTAMP(newLocation)
@@ -87,11 +87,13 @@ class UserMap extends Component {
     // Converting the date into timeStamp (This might not be necessary tho)
     const initDate = CONVERT_DATE_TO_TIMESTAMP(startDate)
     const finDate = CONVERT_DATE_TO_TIMESTAMP(finalDate)
-
+    console.log(initDate)
+    console.log(finDate)
     // Filter locations by specific dates by giving the worker's locations
     // and the initial and final date.
     const newLocations = this.filterLocationsByDate(worker, initDate, finDate)
-
+    console.log('newLocations');
+    console.log(newLocations)
     // Asigning a new user with the new positions to use
     const newUser = this.checkPositions(worker, newLocations)
 

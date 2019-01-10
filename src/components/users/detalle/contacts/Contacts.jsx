@@ -44,7 +44,8 @@ class Contacts extends Component {
       column
       m={1}>
         <Paper>
-        <Box>
+        <Box
+        m={1}>
           <Typography variant={'h6'}>Contactos</Typography>
         </Box>
         <Box
