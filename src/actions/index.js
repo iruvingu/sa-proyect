@@ -33,19 +33,20 @@ export const listenDataAddedChild = () => async dispatch => {
 
     const workersActualized = Object.values(workers).map(worker => {
 
-      const higherLocation = (Object.keys(worker.details.locations))
-      .reduce((prevLocation, location) => 
-        (prevLocation > location)
-          ? prevLocation
-          : location
-        );
-
+      const higherLocation = (worker.details === undefined)
+        ? 1
+        : (Object.keys(worker.details.locations)).reduce((prevLocation, location) => 
+          (prevLocation > location)
+            ? prevLocation
+            : location
+          )
+      
       const convertLocationToDate = CONVERT_TIMESTAMP(higherLocation);
 
       var ObjectToUpdate;
 
-      if(worker.photoUri === undefined) {
-        console.log(`${worker.id} has no foto`)
+      if((worker.photoUri === undefined) && (worker.details !== undefined)) {
+        // console.log(`${worker.id} has no foto`)
         const workerId = worker.id
         testUsersRef.child(workerId).update({
           "photoUri" : "/images/faces/man.png"
@@ -60,17 +61,57 @@ export const listenDataAddedChild = () => async dispatch => {
             "name" : worker.name
           }
         }
-      } else {
+      }
+      else if((worker.photoUri === undefined) && (worker.details === undefined)){
+        const workerId = worker.id
+        testUsersRef.child(workerId).update({
+          "photoUri" : "/images/faces/man.png"
+        })
         ObjectToUpdate = {
-        [worker.id] : {
-          "fecha" : convertLocationToDate,
-          "lat" : worker.details.locations[higherLocation].lat,
-          "lng" : worker.details.locations[higherLocation].lng,
-          "photoUri" : (worker.photoUri),
-          "id" : worker.id,
-          "name" : worker.name
+          [worker.id] : {
+            "fecha" : convertLocationToDate,
+            "lat" : 0,
+            "lng" : 0,
+            "photoUri" : "/images/faces/man.png",
+            "id" : worker.id,
+            "name" : worker.name
+          }
         }
       }
+      else if((worker.photoUri !== undefined) && (worker.details === undefined)){
+        const workerId = worker.id
+        testUsersRef.child(workerId).update({
+          "details" : {
+            "locations" : {
+              "1" : {
+                "lat" : 0,
+                "lng" : 0
+              }
+            }
+          }
+        })
+        ObjectToUpdate = {
+          [worker.id] : {
+            "fecha" : convertLocationToDate,
+            "lat" : 0,
+            "lng" : 0,
+            "photoUri" : (worker.photoUri),
+            "id" : worker.id,
+            "name" : worker.name
+          }
+        }
+      }
+      else {
+        ObjectToUpdate = {
+          [worker.id] : {
+            "fecha" : convertLocationToDate,
+            "lat" : worker.details.locations[higherLocation].lat,
+            "lng" : worker.details.locations[higherLocation].lng,
+            "photoUri" : (worker.photoUri),
+            "id" : worker.id,
+            "name" : worker.name
+          }
+        }
       }
 
       
