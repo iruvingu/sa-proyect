@@ -13,6 +13,7 @@
     "date-fns": "2.0.0-alpha.25",
     "firebase": "^5.5.9",
     "google-map-react": "^1.1.1",
+    "history": "^4.7.2",
     "material-ui-pickers": "^2.0.5",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.23",
