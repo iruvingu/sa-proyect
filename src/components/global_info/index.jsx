@@ -27,7 +27,7 @@ class Global extends Component {
 
   render(){
     const usersOffline = this.filterOfflineUsers(this.props.realtimeUser, this.state.hours)
-    console.log(usersOffline)
+    // console.log(usersOffline)
 
     return(
       <Flex

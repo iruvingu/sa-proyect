@@ -16,7 +16,7 @@ class Polyline extends Component {
     const { worker, newUser } = this.props
 
     if(newUser === undefined){
-      console.log('No hay newUser')
+      // console.log('No hay newUser')
     }
 
     return Object.values(worker.details.locations).map(location => {

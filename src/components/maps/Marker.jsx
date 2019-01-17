@@ -5,7 +5,7 @@ import {greatPlaceStyle, greatPlaceStyleHover} from './greatPlaceStyle'
 class Marker extends Component {
   render() {
     const style = this.props.$hover ? greatPlaceStyleHover : greatPlaceStyle;
-    console.log(this.props)
+    // console.log(this.props)
     return (
        <div style={style}>
           {this.props.text}

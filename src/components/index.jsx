@@ -55,6 +55,10 @@ class ClippedDrawer extends Component {
     open: false
   }
 
+  static contextTypes = {
+    router: PropTypes.object
+  };
+
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
   };
@@ -70,7 +74,7 @@ class ClippedDrawer extends Component {
   render() {
     const { classes, auth } = this.props;
     const { open } = this.state;
-    // console.log(auth)
+    console.log(`PathName: ${this.context.router.history.location.pathname}`)
     return (
       <div className={classes.root}>
         <CssBaseline />
