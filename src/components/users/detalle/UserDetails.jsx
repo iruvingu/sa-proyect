@@ -59,6 +59,10 @@ class UserDetails extends Component {
     anchorEl: null,
   };
 
+  static contextTypes = {
+    router: PropTypes.object
+  };
+  
   // Change the index of the selected item
   handleListItemClick = (event, index) => {
     this.setState({ selectedIndex: index });
@@ -75,6 +79,7 @@ class UserDetails extends Component {
   render() {
     const { classes, theme } = this.props;
     const { anchorEl } = this.state
+    console.log(`PathName: ${this.context.router.history.location.pathname}`)
     return (
       <div className={classes.root}>
         <CssBaseline />
