@@ -84,27 +84,23 @@ class UserDetails extends Component {
     this.setState({ anchorEl: null });
   };
 
-  changeColorByPath = (Path) => {
-    return views
-      .filter(view => (view.path === Path))
-      .map(Array => (
-        this.setState({colors: {
-          [Array.text] : '#EB0505'
-        }})
-      ))
-  }
+  // changeColorByPath = (Path) => {
+  //   return views
+  //     .filter(view => (view.path === Path))
+  //     .map(Array => (
+  //       this.setState({colors: {
+  //         [Array.text] : '#EB0505'
+  //       }})
+  //     ))
+  // }
 
-  componentDidMount() {
-    // this.changeColorByPath(this.context.router.history.location.pathname)
-  }
-
-  // setRoute = (path) => () => {this.props.setRouterLocation(path)}
+  // componentDidMount() {
+  //   this.changeColorByPath(this.props.path)
+  // }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, path } = this.props;
     const { anchorEl } = this.state
-    const path = this.context.router.history.location.pathname
-    // console.log(`PathName: ${path}`)
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -192,7 +188,13 @@ class UserDetails extends Component {
                   }
                 </ListItemIcon>
                 <ListItemText>
-                  <Typography style={{color: this.state.colors[view.text]}}>{view.text}</Typography>
+                  <Typography 
+                    color={
+                      (path === view.path)
+                        ? 'primary'
+                        : 'default'
+                    }
+                  >{view.text}</Typography>
                 </ListItemText>
               </ListItem>
             ))}
