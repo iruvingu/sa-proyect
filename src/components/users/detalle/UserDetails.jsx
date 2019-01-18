@@ -177,13 +177,13 @@ class UserDetails extends Component {
               >
                 <ListItemIcon style={{marginRight: '0px'}}>
                   {index === 0
-                    ? <PersonPin color='secondary' />
+                    ? <PersonPin color={ (path === view.path) ? 'secondary' : 'default' } />
                     : index === 1
-                      ? <ContactPhone color='secondary'/>
+                      ? <ContactPhone color={ (path === view.path) ? 'secondary' : 'default' }/>
                       : index === 2
-                        ? <Sms color='secondary' />
+                        ? <Sms color={ (path === view.path) ? 'secondary' : 'default' } />
                         : index === 3
-                          ? <Phone color='secondary'/>
+                          ? <Phone color={ (path === view.path) ? 'secondary' : 'default' }/>
                           : <Home color='primary'/>
                   }
                 </ListItemIcon>
@@ -191,8 +191,13 @@ class UserDetails extends Component {
                   <Typography 
                     color={
                       (path === view.path)
-                        ? 'primary'
+                        ? 'secondary'
                         : 'default'
+                    }
+                    variant={
+                      (path === view.path)
+                        ? 'body2'
+                        : 'body1'
                     }
                   >{view.text}</Typography>
                 </ListItemText>
