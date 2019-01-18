@@ -1,7 +1,6 @@
 import { testUsersRef, realTimeUsersRef, authRef,
   googleAuthProvider, usersBranchRef, timeRef } from '../firebase_handler/firebase'
-import { FETCH_USER, FETCH_FIREBASE_DB, SET_WORKER,
-  FETCH_REALTIME_USER_DB, LISTEN_ADDED_DATA_TO_CHILD, SET_MARKER, SET_TIME } from './type'
+import * as Type from './type'
 import { CONVERT_TIMESTAMP } from '../services'
 
 // Set time to firebase
@@ -9,10 +8,18 @@ export const setTimeToFB = (time) =>  async dispatch => {
   timeRef.child('time_location').push(time)
 }
 
+// Change the router location
+export const setRouterLocation = (path) => dispatch => {
+  dispatch({
+    type: Type.SET_PATH,
+    payload: path
+  })
+}
+
 // Hover a marker
 export const woverMarker = (markerId) => dispatch => {
   dispatch({
-    type: SET_MARKER,
+    type: Type.SET_MARKER,
     payload: markerId
   })
 }
@@ -20,7 +27,7 @@ export const woverMarker = (markerId) => dispatch => {
 // Setting the User to view and getting the user's data
 export const setWorker = (worker) => dispatch => {
   dispatch({
-    type: SET_WORKER,
+    type: Type.SET_WORKER,
     payload: worker
   })
 }
@@ -122,7 +129,7 @@ export const listenDataAddedChild = () => async dispatch => {
     })
 
     dispatch({
-      type: LISTEN_ADDED_DATA_TO_CHILD,
+      type: Type.LISTEN_ADDED_DATA_TO_CHILD,
       payload: workersActualized
     })
   })
@@ -132,7 +139,7 @@ export const listenDataAddedChild = () => async dispatch => {
 export const fecthRealTimeUsersLocationDB = () => async dispatch => {
   realTimeUsersRef.on('value', snapshot => {
     dispatch({
-      type: FETCH_REALTIME_USER_DB,
+      type: Type.FETCH_REALTIME_USER_DB,
       payload: snapshot.val()
     })
   })
@@ -143,7 +150,7 @@ export const fetchFirebaseDB = () => async dispatch => {
   testUsersRef.on('value', snapshot => {
     console.log(snapshot.val())
     dispatch({
-      type: FETCH_FIREBASE_DB,
+      type: Type.FETCH_FIREBASE_DB,
       payload: snapshot.val()
     })
   })
@@ -153,7 +160,7 @@ export const fetchFirebaseDB = () => async dispatch => {
 export const fetchUser = () => dispatch => {
   authRef.onAuthStateChanged(user => {
     dispatch({
-      type: FETCH_USER,
+      type: Type.FETCH_USER,
       payload: user
     })
   });

@@ -1,22 +1,22 @@
 export default [
   {
     id: 0,
-    name: 'Usuario',
-    path: '/usuario'
+    text: 'Usuario',
+    path: '/user/detail/Usuario'
   },
   {
     id: 1,
-    name: 'Contactos',
-    path: '/contactos'
+    text: 'Contactos',
+    path: '/user/detail/Contactos'
   },
   {
     id: 2,
-    name: 'SMS',
-    path: '/sms'
+    text: 'SMS',
+    path: '/user/detail/SMS'
   },
   {
     id: 3,
-    name: 'Llamadas',
-    path: '/llamadas'
+    text: 'Llamadas',
+    path: '/user/detail/Llamadas'
   },
 ]

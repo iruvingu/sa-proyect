@@ -6,6 +6,8 @@ import Face from '@material-ui/icons/Face'
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { setRouterLocation } from '../../../../actions'
 
 const styles = theme => ({
   root: {
@@ -23,12 +25,20 @@ class Contacts extends Component {
   state = {
     expanded: null,
   };
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
   
   handleChange = panel => (event, expanded) => {
     this.setState({
       expanded: expanded ? panel : false,
     });
   };
+
+  componentDidMount() {
+    this.props.setRouterLocation(this.context.router.history.location.pathname)
+  }
 
   render = () => {
     const { expanded } = this.state
@@ -102,4 +112,4 @@ const contactsWithStyles = withStyles(styles)(Contacts)
 
 const mapStateToProps = ({ worker }) => ({ worker: worker.worker })
 
-export default connect (mapStateToProps, null)(contactsWithStyles)
+export default connect (mapStateToProps, { setRouterLocation })(contactsWithStyles)

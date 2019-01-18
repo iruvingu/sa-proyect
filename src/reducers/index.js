@@ -9,6 +9,7 @@ import worker from './setUserReducer'
 import realtimeUser from './rtUserLocationReducer'
 import usersOnChange from './listenDataChildReducer'
 import hoverId from './hoverMarkerReducer'
+import path from './getPath'
 
 export default combineReducers({
   auth,
@@ -16,5 +17,6 @@ export default combineReducers({
   worker,
   realtimeUser,
   usersOnChange,
-  hoverId
+  hoverId,
+  path
 });

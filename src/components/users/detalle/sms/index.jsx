@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Search from '@material-ui/icons/Search'
 import { connect } from 'react-redux'
 import { CONVERT_TIMESTAMP } from '../../../../services'
+import { setRouterLocation } from '../../../../actions'
 
 const styles = theme => ({
   root: {
@@ -47,6 +48,10 @@ class Mensaje extends Component {
     nulo: ''
   }
 
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   componentDidMount() {
     (!this.props.worker.details.sms)
       ? this.setState({nulo: 'nulo'})
@@ -56,7 +61,7 @@ class Mensaje extends Component {
       messagesReceived: Object.values(this.props.worker.details.sms).filter(mensaje => { 
         return mensaje.estatus.toLowerCase() === 'recibido'})
       })
-    
+    this.props.setRouterLocation(this.context.router.history.location.pathname)
   }
 
   bodyMessageSubstring = body => (
@@ -200,4 +205,4 @@ const mapStateToProps = ({ worker }) => ({ worker: worker.worker })
 
 const mensajeWithStyles = withStyles(styles)(Mensaje)
 
-export default connect(mapStateToProps, null)(mensajeWithStyles)
+export default connect(mapStateToProps, { setRouterLocation })(mensajeWithStyles)

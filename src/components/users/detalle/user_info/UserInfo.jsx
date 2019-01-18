@@ -7,10 +7,11 @@ import moment from 'moment-timezone'
 import { es } from 'date-fns/locale';
 import UserMap from './UserMap'
 import { connect } from 'react-redux'
+import ProptTypes from 'prop-types'
 
 import Periodo from './Periodo'
 import TimePickerControl from './TimePickerControl'
-
+import { setRouterLocation } from '../../../../actions'
 // const es = moment.locale('es')
 
 const createDate = val => (
@@ -28,6 +29,10 @@ class UserInfo extends Component {
     finalDate: today
   }
 
+  static contextTypes = {
+    router: ProptTypes.object
+  }
+
   myCallbackStart = async(dataFromChild) => {
     this.setState({startDate: dataFromChild})
   }
@@ -42,6 +47,10 @@ class UserInfo extends Component {
 
   handleDateChange2 = date => {
     this.setState({ finalDate: date })
+  }
+
+  componentDidMount() {
+    this.props.setRouterLocation(this.context.router.history.location.pathname)
   }
 
   render() {
@@ -279,4 +288,4 @@ class UserInfo extends Component {
 
 const mapStateToProps = ({ worker }) => ({ worker: worker.worker })
 
-export default connect(mapStateToProps, null)(UserInfo)
+export default connect(mapStateToProps, { setRouterLocation })(UserInfo)

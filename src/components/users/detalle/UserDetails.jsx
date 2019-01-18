@@ -24,6 +24,7 @@ import Calls from './calls/Calls'
 import Saludo from './saludo'
 
 import views from './settings'
+import { setRouterLocation } from '../../../actions'
 
 const drawerWidth = 200;
 
@@ -57,6 +58,13 @@ class UserDetails extends Component {
     open: false,
     selectedIndex: null,
     anchorEl: null,
+    colors: {
+      Usuario: '#949494',
+      Contactos: '#949494',
+      SMS: '#949494',
+      Llamadas: '#949494'
+    }
+    
   };
 
   static contextTypes = {
@@ -64,7 +72,7 @@ class UserDetails extends Component {
   };
   
   // Change the index of the selected item
-  handleListItemClick = (event, index) => {
+  handleListItemClick = (event, index, path) => {
     this.setState({ selectedIndex: index });
   };
 
@@ -76,10 +84,27 @@ class UserDetails extends Component {
     this.setState({ anchorEl: null });
   };
 
+  changeColorByPath = (Path) => {
+    return views
+      .filter(view => (view.path === Path))
+      .map(Array => (
+        this.setState({colors: {
+          [Array.text] : '#EB0505'
+        }})
+      ))
+  }
+
+  componentDidMount() {
+    // this.changeColorByPath(this.context.router.history.location.pathname)
+  }
+
+  // setRoute = (path) => () => {this.props.setRouterLocation(path)}
+
   render() {
     const { classes, theme } = this.props;
     const { anchorEl } = this.state
-    console.log(`PathName: ${this.context.router.history.location.pathname}`)
+    const path = this.context.router.history.location.pathname
+    // console.log(`PathName: ${path}`)
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -145,12 +170,12 @@ class UserDetails extends Component {
         >
           <div className={classes.toolbar} />
             <List>
-            {['Usuario', 'Contactos', 'SMS', 'Llamadas'].map((text, index) => (
+            {views.map((view, index) => (
               <ListItem
                 button
-                key={text}
+                key={view.text}
                 component={Link}
-                to={{pathname: `/user/detail/${text}`}}
+                to={{pathname: `/user/detail/${view.text}`}}
                 selected={this.state.selectedIndex === index}
                 onClick={event => this.handleListItemClick(event, index)}
               >
@@ -167,7 +192,7 @@ class UserDetails extends Component {
                   }
                 </ListItemIcon>
                 <ListItemText>
-                  <Typography>{text}</Typography>
+                  <Typography style={{color: this.state.colors[view.text]}}>{view.text}</Typography>
                 </ListItemText>
               </ListItem>
             ))}
@@ -205,10 +230,11 @@ UserDetails.propTypes = {
 
 const UserDetailsWithStyles = withStyles(styles, { withTheme: true })(UserDetails);
 
-const MapStateToProps = ({ auth }) => {
+const MapStateToProps = ({ auth, path }) => {
   return ({
-    auth
+    auth,
+    path: path.path
   })
 }
 
-export default connect(MapStateToProps, null)(UserDetailsWithStyles)
+export default connect(MapStateToProps, {setRouterLocation})(UserDetailsWithStyles)

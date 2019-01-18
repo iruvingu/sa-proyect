@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux'
 
 import { CONVERT_TIMESTAMP } from '../../../../services'
+import { setRouterLocation } from '../../../../actions'
 import { Typography } from '@material-ui/core';
 
 const CustomTableCell = withStyles(theme => ({
@@ -42,6 +43,14 @@ const styles = theme => ({
 });
 
 class Calls extends React.Component {
+
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
+  componentDidMount() {
+    this.props.setRouterLocation(this.context.router.history.location.pathname)
+  }
 
   render = () => {
   const { classes, worker } = this.props;
@@ -113,4 +122,4 @@ const CallsWithStyles = withStyles(styles)(Calls)
 
 const mapStateToProps = ({ worker }) => ({worker: worker.worker})
 
-export default connect(mapStateToProps, null)(CallsWithStyles)
+export default connect(mapStateToProps, { setRouterLocation })(CallsWithStyles)

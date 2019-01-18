@@ -2,12 +2,12 @@ import * as firebase from "firebase";
 
 const database = 
   {
-    apiKey: "AIzaSyCcepJWym8FiUx2ogpN8UYu4vloPvwJQ2Q",
-    authDomain: "sa-project-sdk.firebaseapp.com",
-    databaseURL: "https://sa-project-sdk.firebaseio.com",
-    projectId: "sa-project-sdk",
-    storageBucket: "sa-project-sdk.appspot.com",
-    messagingSenderId: "272186930580"
+    apiKey: "AIzaSyBroCI9qCUUIt0_LgLs96LquaSqdUzyl2Y",
+    authDomain: "sdk-project-app.firebaseapp.com",
+    databaseURL: "https://sdk-project-app.firebaseio.com",
+    projectId: "sdk-project-app",
+    storageBucket: "sdk-project-app.appspot.com",
+    messagingSenderId: "628531525880"
   }
 
 firebase.initializeApp(database);

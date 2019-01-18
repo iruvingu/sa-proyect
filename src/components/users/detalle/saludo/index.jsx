@@ -1,12 +1,25 @@
 import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
+import PropTypes from 'prop-types';
 import { Paper, Typography } from '@material-ui/core'
 import { Avatar } from '@material-ui/core'
 import { connect } from 'react-redux'
+import { setRouterLocation } from '../../../../actions'
 
 class Saludo extends Component {
+
+  static contextTypes = {
+    router: PropTypes.object
+  };
+  
+  componentDidMount() {
+    this.props.setRouterLocation(this.context.router.history.location.pathname)
+  }
+
   render() {
     const { worker } = this.props
+    const path = this.context.router.history.location.pathname
+    console.log(`PathName: ${path}`)
     return(
       <Flex
       w={1}
@@ -43,4 +56,4 @@ const mapStateToProps = ({ worker }) => {
   })
 }
 
-export default connect(mapStateToProps, null)(Saludo)
+export default connect(mapStateToProps, { setRouterLocation })(Saludo)
