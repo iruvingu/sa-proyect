@@ -19,7 +19,7 @@ class SomeUsers extends Component {
   }
 
   render() {
-    const { data } = this.props
+    const { data, hoverId } = this.props
     console.log(data)
     if(!data) {
       return (
@@ -27,15 +27,15 @@ class SomeUsers extends Component {
       )
     } else {
       return (
-        <UserList users={data} />
+        <UserList users={ data } hoverMarkerId={ hoverId } />
     )
     }
     
   }
 }
 
-const mapStateToProps = ({ data }) => {
-  return { data }
+const mapStateToProps = ({ data, hoverId }) => {
+  return ({ data, hoverId })
 }
 
 export default connect(mapStateToProps, { fetchFirebaseDB })(SomeUsers)

@@ -68,7 +68,7 @@ class UserList extends Component {
   }
 
   render(){
-    const { users, classes, hoverId } = this.props
+    const { users, classes, hoverId, hoverMarkerId } = this.props
     const { expanded } = this.state;
     const filteredUsers = Object.values(users).filter((user) => {
         // if you can't find this stateSearch with this particular userName 
@@ -80,7 +80,7 @@ class UserList extends Component {
           // indexOf just look for the index of a particular character string
           // or character that we are looking for...
       })
-    Object.values(users).map(user => (user.id === this.state.id ? console.log('idIguales') : console.log('no iguales')))
+    Object.values(users).map(user => (user.id === hoverMarkerId ? console.log('idIguales') : console.log('no iguales')))
     return (
       <div>
         <Flex
