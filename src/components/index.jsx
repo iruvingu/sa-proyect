@@ -16,16 +16,6 @@ import FirebaseUsers from './users'
 import MapTrack from './maps'
 import GlobalInfo from './global_info'
 
-const StyledButton = styled.button`
-  background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
-  border-radius: 3px;
-  border: 0;
-  color: white;
-  height: 100%;
-  variant: contained;
-  box-shadow: 0 3px 5px 2px rgba(255, 105, 135, .3);
-`;
-
 const drawerWidth = 240;
 
 const styles = theme => ({

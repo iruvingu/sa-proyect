@@ -16,7 +16,7 @@ import { Typography } from '@material-ui/core';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: '#D30B0B',
     color: theme.palette.common.white,
     fontSize: 16,
   },

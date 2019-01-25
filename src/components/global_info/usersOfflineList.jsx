@@ -12,11 +12,11 @@ class UsersOffline extends Component {
           column
           mx={1}>
             <Paper
-            style={{width: '240px'}}>
-              <Box>
+            style={{width: '240px', background: '#C3C6E2'}}>
+              <Box m={1}>
                 {name}
               </Box>
-              <Box>
+              <Box m={1}>
                 ultima vez: {date}
               </Box>
             </Paper>

@@ -32,7 +32,7 @@ class Saludo extends Component {
         >
           <Paper elevation={2} >
             <Box
-            p={2}
+            p={1}
             flex
             justify='center'>
               <Avatar style={{width: 120, height: 120}} src={worker.photoUri} />                

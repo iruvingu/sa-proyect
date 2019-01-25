@@ -20,6 +20,7 @@ class SomeUsers extends Component {
 
   render() {
     const { data } = this.props
+    console.log(data)
     if(!data) {
       return (
         <UserList users={this.state.users} />

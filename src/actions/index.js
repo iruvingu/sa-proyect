@@ -17,7 +17,7 @@ export const setRouterLocation = (path) => dispatch => {
 }
 
 // Hover a marker
-export const woverMarker = (markerId) => dispatch => {
+export const hoverMarker = (markerId) => dispatch => {
   dispatch({
     type: Type.SET_MARKER,
     payload: markerId

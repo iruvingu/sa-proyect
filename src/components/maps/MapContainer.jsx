@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import GoogleMapReact from 'google-map-react'
 import { MAP_API_KEY } from '../../constants/helpers'
+import { connect } from 'react-redux'
 
 import {CircleImagePose} from './CircleImagePose'
 import { K_SIZE } from './greatPlaceStyle'
+import { hoverMarker } from '../../actions'
 // import Marker from './Marker'
 
 class MapContainer extends Component {
@@ -23,7 +25,12 @@ class MapContainer extends Component {
 
   _onChildMouseEnter = (key, childProps) => {
     console.log(`Marcador con id = ${childProps.children.props.id}`)
+    this.props.hoverMarker(childProps.children.props.id)
     // console.log(this.props)
+  }
+
+  _onChildMouseLeave = () => {
+    this.props.hoverMarker(-1)
   }
 
   markerPosition = (workers) => {
@@ -57,6 +64,7 @@ class MapContainer extends Component {
           hoverDistance={K_SIZE / 2}
           options={this.createMapOptions}
           onChildMouseEnter={this._onChildMouseEnter}
+          onChildMouseLeave={this._onChildMouseLeave}
         >
           {this.markerPosition(workers, this.props)}
         </GoogleMapReact>
@@ -65,4 +73,8 @@ class MapContainer extends Component {
   }
 }
 
-export default MapContainer
+const mapStateToProps = ({ hoverId }) => {
+  return({ hoverId })
+}
+
+export default connect(mapStateToProps, { hoverMarker })(MapContainer)

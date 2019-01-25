@@ -42,7 +42,8 @@ class UserList extends Component {
     expanded: null,
     search: '',
     slectedIndex: 0,
-    background : '#EF3636'
+    background : 'white',
+    id: ''
   }
 
   handleListItemClick = (event, index) => {
@@ -61,8 +62,13 @@ class UserList extends Component {
     })
   }
 
+  componentDidMount() {
+    this.setState({id: this.props.hoverId})
+    console.log(this.state.id)
+  }
+
   render(){
-    const { users, classes } = this.props
+    const { users, classes, hoverId } = this.props
     const { expanded } = this.state;
     const filteredUsers = Object.values(users).filter((user) => {
         // if you can't find this stateSearch with this particular userName 
@@ -74,7 +80,7 @@ class UserList extends Component {
           // indexOf just look for the index of a particular character string
           // or character that we are looking for...
       })
-    
+    Object.values(users).map(user => (user.id === this.state.id ? console.log('idIguales') : console.log('no iguales')))
     return (
       <div>
         <Flex
@@ -105,12 +111,14 @@ class UserList extends Component {
                       <ExpansionPanel
                       expanded={expanded === (`panel${index}`)}
                       onChange={this.handleChange(`panel${index}`)}
-                      // onMouseEnter={() => {
-                      //   this.setState({background: '#A10000'})
-                      // }}
-                      // onMouseLeave={() => {
-                      //   this.setState({background: '#EF3636'});
-                      // }}
+                      onMouseEnter={() => {
+                        console.log(`usuario con id ${user.id}`)
+                      }}
+                      onMouseLeave={() => {
+                        hoverId === user.id 
+                        ? console.log(`Id iguales`)
+                        : console.log('no son iguales')
+                      }}
                       >
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.row}>
                           {(!user.photoUri)
@@ -118,7 +126,8 @@ class UserList extends Component {
                             : <Avatar src={user.photoUri} style={{width: 30, height: 30}} />
                           }
                           {/* <Avatar src={user.photoUri} style={{width: 30, height: 30}} /> */}
-                          <Typography className={classes.heading}>{user.name}</Typography>
+                          <Typography className={classes.heading}
+                           color={(hoverId === user.id) ? 'primary' : 'default'}>{user.name}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                         <div className={classes.root}>
@@ -144,4 +153,8 @@ class UserList extends Component {
 
 const UserListWithStyles =  withStyles(styles)(UserList)
 
-export default connect(null, { setWorker })(UserListWithStyles)
+const mapStateToProps = ({ hoverID }) => {
+  return ({ hoverID })
+}
+
+export default connect(mapStateToProps, { setWorker })(UserListWithStyles)

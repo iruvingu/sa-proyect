@@ -10,7 +10,7 @@ const Circle = posed.div({
   init: {
     width: '40px',
     height: '40px',
-    boxShadow: '0px 0px 0px rgba(0,0,0,0)',
+    boxShadow: '0px 0px 0px rgba(0,0,0,0)'
   },
   hover: {
     width: '50px',
