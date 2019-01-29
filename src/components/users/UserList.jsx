@@ -43,7 +43,6 @@ class UserList extends Component {
     search: '',
     slectedIndex: 0,
     background : 'white',
-    id: ''
   }
 
   handleListItemClick = (event, index) => {
@@ -62,13 +61,8 @@ class UserList extends Component {
     })
   }
 
-  componentDidMount() {
-    this.setState({id: this.props.hoverId})
-    console.log(this.state.id)
-  }
-
   render(){
-    const { users, classes, hoverId, hoverMarkerId } = this.props
+    const { users, classes, hoverMarkerId } = this.props
     const { expanded } = this.state;
     const filteredUsers = Object.values(users).filter((user) => {
         // if you can't find this stateSearch with this particular userName 
@@ -111,23 +105,23 @@ class UserList extends Component {
                       <ExpansionPanel
                       expanded={expanded === (`panel${index}`)}
                       onChange={this.handleChange(`panel${index}`)}
+                      style={{background: ((hoverMarkerId === user.id) ? '#AAAAAA' : '#FFFFFF')}}
                       onMouseEnter={() => {
                         console.log(`usuario con id ${user.id}`)
                       }}
                       onMouseLeave={() => {
-                        hoverId === user.id 
-                        ? console.log(`Id iguales`)
-                        : console.log('no son iguales')
+                        console.log('no user selected')
                       }}
                       >
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} className={classes.row}>
+                        <ExpansionPanelSummary style={{background: (hoverMarkerId === user.id) ? '#AAAAAA' : '#FFFFFF'}}
+                         expandIcon={<ExpandMoreIcon />} className={classes.row}>
                           {(!user.photoUri)
                             ? <Avatar src={'/images/faces/man.png'} style={{width: 30, height: 30}} />
                             : <Avatar src={user.photoUri} style={{width: 30, height: 30}} />
                           }
                           {/* <Avatar src={user.photoUri} style={{width: 30, height: 30}} /> */}
                           <Typography className={classes.heading}
-                           color={(hoverId === user.id) ? 'primary' : 'default'}>{user.name}</Typography>
+                           color={(hoverMarkerId === user.id) ? 'primary' : 'default'}>{user.name}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                         <div className={classes.root}>
