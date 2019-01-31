@@ -40,7 +40,8 @@ export const listenDataAddedChild = () => async dispatch => {
 
     const workersActualized = Object.values(workers).map(worker => {
 
-      const higherLocation = (worker.details === undefined)
+      try{
+        const higherLocation = (worker.details === undefined)
         ? 1
         : (Object.keys(worker.details.locations)).reduce((prevLocation, location) => 
           (prevLocation > location)
@@ -121,11 +122,13 @@ export const listenDataAddedChild = () => async dispatch => {
         }
       }
 
-      
-
       realTimeUsersRef.update(ObjectToUpdate)
 
       return ObjectToUpdate;
+      }catch(e){
+        console.log(e)
+      }
+      
     })
 
     dispatch({

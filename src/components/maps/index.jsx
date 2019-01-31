@@ -10,15 +10,15 @@ class MapTrack extends Component {
   }
 
   render() {
-    const { realtimeUser } = this.props
+    const { realtimeUser, hoverId } = this.props
     return (
-      <MapContainer workers={realtimeUser} />
+      <MapContainer workers={realtimeUser} hoverUser={hoverId} />
     )
   }
 }
 
-const mapStateToProps = ({ realtimeUser }) => {
-  return ({ realtimeUser })
+const mapStateToProps = ({ realtimeUser, hoverId }) => {
+  return ({ realtimeUser, hoverId })
 }
 
 export default connect(mapStateToProps, { fecthRealTimeUsersLocationDB, listenDataAddedChild })(MapTrack)

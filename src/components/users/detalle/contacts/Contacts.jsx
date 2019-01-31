@@ -66,10 +66,10 @@ class Contacts extends Component {
         m={1}
         >
           {
-            (worker.details.contactos === undefined)
+            (worker.details.contacts === undefined)
             ? <div>No hay contactos guardados</div>
             :
-            Object.values(worker.details.contactos).map((contact, index) => (
+            Object.values(worker.details.contacts).map((contact, index) => (
             <div style={{width: '100%'}} key={index}>
             <ExpansionPanel
             expanded={expanded === (`panel${index}`)}

@@ -128,7 +128,7 @@ class UserInfo extends Component {
                           </Typography>
                         </Box>
                         <Box>
-                        <div>{worker.device.IMEI}</div>
+                        <div>{worker.device.imei}</div>
                         </Box>
                       </Flex>
                     </Paper>
@@ -150,7 +150,7 @@ class UserInfo extends Component {
                           </Typography>
                         </Box>
                         <Box>
-                          <div>{worker.device.batery}</div>
+                          <div>{worker.device.battery}</div>
                         </Box>
                       </Flex>
                     </Paper>

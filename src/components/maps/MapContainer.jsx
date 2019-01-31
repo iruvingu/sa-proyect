@@ -33,7 +33,7 @@ class MapContainer extends Component {
     this.props.hoverMarker(-1)
   }
 
-  markerPosition = (workers) => {
+  markerPosition = (workers, hoverUser) => {
     return Object.values(workers).map((worker,i) => {
       return (
         <div
@@ -41,6 +41,7 @@ class MapContainer extends Component {
           lat={worker.lat}
           lng={worker.lng}
           style={{cursor: 'pointer'}}
+          hover={hoverUser === worker.id}
         >
           {(!worker.photoUri)
             ? <CircleImagePose image={'/images/faces/man.png'} title={worker.fecha} id={worker.id} />
@@ -53,7 +54,7 @@ class MapContainer extends Component {
   }
 
   render() {
-    const { workers } = this.props
+    const { workers, hoverUser } = this.props
     return (
       // Important! Always set the container height explicitly
       <div style={{ height: '100vh', width: '100%' }}>
@@ -66,15 +67,12 @@ class MapContainer extends Component {
           onChildMouseEnter={this._onChildMouseEnter}
           onChildMouseLeave={this._onChildMouseLeave}
         >
-          {this.markerPosition(workers, this.props)}
+          {this.markerPosition(workers, hoverUser)}
         </GoogleMapReact>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ hoverId }) => {
-  return({ hoverId })
-}
 
-export default connect(mapStateToProps, { hoverMarker })(MapContainer)
+export default connect(null, { hoverMarker })(MapContainer)

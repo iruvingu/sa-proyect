@@ -15,7 +15,7 @@ import Search from '@material-ui/icons/Search'
  * redux
  */
 import { connect } from 'react-redux'
-import { setWorker } from '../../actions'
+import { setWorker, hoverMarker } from '../../actions'
 import { Link } from 'react-router-dom'
 import { Flex, Box } from 'reflexbox'
 
@@ -105,15 +105,17 @@ class UserList extends Component {
                       <ExpansionPanel
                       expanded={expanded === (`panel${index}`)}
                       onChange={this.handleChange(`panel${index}`)}
-                      style={{background: ((hoverMarkerId === user.id) ? '#AAAAAA' : '#FFFFFF')}}
+                      style={{background: ((hoverMarkerId === user.id) ? '#DCDCDC' : '#FFFFFF')}}
                       onMouseEnter={() => {
                         console.log(`usuario con id ${user.id}`)
+                        this.props.hoverMarker(user.id)
                       }}
                       onMouseLeave={() => {
                         console.log('no user selected')
+                        this.props.hoverMarker(-1)
                       }}
                       >
-                        <ExpansionPanelSummary style={{background: (hoverMarkerId === user.id) ? '#AAAAAA' : '#FFFFFF'}}
+                        <ExpansionPanelSummary style={{background: (hoverMarkerId === user.id) ? '#DCDCDC' : '#FFFFFF'}}
                          expandIcon={<ExpandMoreIcon />} className={classes.row}>
                           {(!user.photoUri)
                             ? <Avatar src={'/images/faces/man.png'} style={{width: 30, height: 30}} />
@@ -151,4 +153,4 @@ const mapStateToProps = ({ hoverID }) => {
   return ({ hoverID })
 }
 
-export default connect(mapStateToProps, { setWorker })(UserListWithStyles)
+export default connect(mapStateToProps, { setWorker, hoverMarker })(UserListWithStyles)

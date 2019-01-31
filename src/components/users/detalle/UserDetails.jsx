@@ -84,20 +84,6 @@ class UserDetails extends Component {
     this.setState({ anchorEl: null });
   };
 
-  // changeColorByPath = (Path) => {
-  //   return views
-  //     .filter(view => (view.path === Path))
-  //     .map(Array => (
-  //       this.setState({colors: {
-  //         [Array.text] : '#EB0505'
-  //       }})
-  //     ))
-  // }
-
-  // componentDidMount() {
-  //   this.changeColorByPath(this.props.path)
-  // }
-
   render() {
     const { classes, theme, path } = this.props;
     const { anchorEl } = this.state
