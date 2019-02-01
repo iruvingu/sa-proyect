@@ -140,23 +140,33 @@ export const listenDataAddedChild = () => async dispatch => {
 
 // Fetching realtimeUser's location and date in the realtime_users node
 export const fecthRealTimeUsersLocationDB = () => async dispatch => {
-  realTimeUsersRef.on('value', snapshot => {
-    dispatch({
-      type: Type.FETCH_REALTIME_USER_DB,
-      payload: snapshot.val()
-    })
-  })
+  try{
+    realTimeUsersRef.on('value', snapshot => {
+        dispatch({
+          type: Type.FETCH_REALTIME_USER_DB,
+          payload: snapshot.val()
+        })
+      })
+  }catch(e){
+    console.log(e)
+  }
+  
 }
 
 // Fetching data from Firebase
 export const fetchFirebaseDB = () => async dispatch => {
-  testUsersRef.on('value', snapshot => {
-    console.log(snapshot.val())
-    dispatch({
-      type: Type.FETCH_FIREBASE_DB,
-      payload: snapshot.val()
-    })
-  })
+  try{
+    testUsersRef.on('value', snapshot => {
+        console.log(snapshot.val())
+        dispatch({
+          type: Type.FETCH_FIREBASE_DB,
+          payload: snapshot.val()
+        })
+      })
+  }catch(e){
+    console.log(e)
+  }
+  
 }
 
 // Fetching User authenticated

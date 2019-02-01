@@ -12,8 +12,9 @@ import { Link, Route, Switch } from 'react-router-dom'
  * icons
  */
 
-import { Sms, Home, PersonPin, ContactPhone, Phone, ArrowBack } from '@material-ui/icons'
-
+import { Sms, Home, PersonPin, ContactPhone, Phone, ArrowBack, ChevronLeft,
+  ChevronRight } from '@material-ui/icons'
+import MenuIcon from "@material-ui/icons/Menu"
 /**
  * Components
  */
@@ -26,7 +27,7 @@ import Saludo from './saludo'
 import views from './settings'
 import { setRouterLocation } from '../../../actions'
 
-const drawerWidth = 200;
+const drawerWidth = 160;
 
 const styles = theme => ({
   root: {
@@ -34,10 +35,48 @@ const styles = theme => ({
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  menuButton: {
+    marginLeft: 0,
+    marginRight: 0
+  },
+  hide: {
+    display: "none"
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    whiteSpace: "nowrap"
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  drawerClose: {
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    overflowX: "hidden",
+    width: theme.spacing.unit * 7 + 1,
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing.unit * 8 + 1
+    }
   },
   drawerPaper: {
     width: drawerWidth,
@@ -46,16 +85,18 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
   },
-  toolbar: theme.mixins.toolbar,
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  }
+  toolbar: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
+    ...theme.mixins.toolbar
+  },
 });
 
 class UserDetails extends Component {
   state = {
-    open: false,
+    open: true,
     selectedIndex: null,
     anchorEl: null,
     colors: {
@@ -84,6 +125,14 @@ class UserDetails extends Component {
     this.setState({ anchorEl: null });
   };
 
+  handleDrawerOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ open: false });
+  };
+
   render() {
     const { classes, theme, path } = this.props;
     const { anchorEl } = this.state
@@ -91,8 +140,11 @@ class UserDetails extends Component {
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
+          style={{background: '#FFFFFF'}}
           position="fixed"
-          className={classes.appBar}
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: this.state.open
+          })}
         >
           <Toolbar>
             <Flex
@@ -114,10 +166,10 @@ class UserDetails extends Component {
                     column
                     justify='flex-start'
                   >
-                    <Typography style={{ color: 'white' }} variant='title'>
+                    <Typography style={{ color: '#404E67' }} variant='title'>
                       Administración
                     </Typography>
-                    <Typography style={{ color: 'white' }} variant='caption'>
+                    <Typography style={{ color: '#404E67' }} variant='caption'>
                       Panel de control
                     </Typography>
                   </Flex>
@@ -127,7 +179,7 @@ class UserDetails extends Component {
                 aria-owns={anchorEl ? 'simple-menu' : undefined}
                 aria-haspopup="true"
                 onClick={this.handleClick}>
-                  <Typography style={{ color: 'white' }} variant='caption'>
+                  <Typography style={{ color: '#404E67' }} variant='caption'>
                     Administrador
                   </Typography>
                 </Button>
@@ -144,62 +196,97 @@ class UserDetails extends Component {
           </Toolbar>
         </AppBar>
         <Drawer
-        className={classes.drawer}
         variant="permanent"
+        className={classNames(classes.drawer, {
+          [classes.drawerOpen]: this.state.open,
+          [classes.drawerClose]: !this.state.open
+        })}
         classes={{
-          paper: classes.drawerPaper,
+          paper: classNames({
+            [classes.drawerOpen]: this.state.open,
+            [classes.drawerClose]: !this.state.open
+          })
         }}
+        open={this.state.open}
         >
-          <div className={classes.toolbar} />
-            <List>
-            {views.map((view, index) => (
-              <ListItem
-                button
-                key={view.text}
-                component={Link}
-                to={{pathname: `/user/detail/${view.text}`}}
-                selected={this.state.selectedIndex === index}
-                onClick={event => this.handleListItemClick(event, index)}
-              >
-                <ListItemIcon style={{marginRight: '0px'}}>
-                  {index === 0
-                    ? <PersonPin color={ (path === view.path) ? 'secondary' : 'default' } />
-                    : index === 1
-                      ? <ContactPhone color={ (path === view.path) ? 'secondary' : 'default' }/>
-                      : index === 2
-                        ? <Sms color={ (path === view.path) ? 'secondary' : 'default' } />
-                        : index === 3
-                          ? <Phone color={ (path === view.path) ? 'secondary' : 'default' }/>
-                          : <Home color='primary'/>
-                  }
-                </ListItemIcon>
-                <ListItemText>
-                  <Typography 
-                    color={
-                      (path === view.path)
-                        ? 'secondary'
-                        : 'default'
+          <div className={classes.toolbar} style={{background: '#445064' }} >
+          </div>
+          <Flex
+          flex
+          column
+          justify='space-between'
+          style={{height: '100%', background: '#445064'}}>
+            <Box
+            justify='start'
+            >
+              <Divider />
+              <List>
+              {views.map((view, index) => (
+                <ListItem
+                  button
+                  key={view.text}
+                  component={Link}
+                  to={{pathname: `/user/detail/${view.text}`}}
+                  selected={this.state.selectedIndex === index}
+                  onClick={event => this.handleListItemClick(event, index)}
+                >
+                  <ListItemIcon style={{marginRight: '0px'}}>
+                    {index === 0
+                      ? <PersonPin style={{color: (path === view.path) ? '#FFFFFF' : '#C8CACE'}} />
+                      : index === 1
+                        ? <ContactPhone style={{color: (path === view.path) ? '#FFFFFF' : '#C8CACE'}} />
+                        : index === 2
+                          ? <Sms style={{color: (path === view.path) ? '#FFFFFF' : '#C8CACE'}} />
+                          : index === 3
+                            ? <Phone style={{color: (path === view.path) ? '#FFFFFF' : '#C8CACE'}} />
+                            : <Home color='primary'/>
                     }
-                    variant={
-                      (path === view.path)
-                        ? 'body2'
-                        : 'body1'
-                    }
-                  >{view.text}</Typography>
-                </ListItemText>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['Inicio'].map((text, index) => (
-              <ListItem button key={text} component={Link}
-              to='/'>
-                <ListItemIcon style={{marginRight: '0px'}}><Home color='primary'  /></ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>       
+                  </ListItemIcon>
+                  <ListItemText>
+                    <Typography 
+                      style={{color: (path === view.path) ? '#FFFFFF' : '#C8CACE'}}
+                      variant={
+                        (path === view.path)
+                          ? 'body2'
+                          : 'body1'
+                      }
+                    >{view.text}</Typography>
+                  </ListItemText>
+                </ListItem>
+                ))}
+              </List>
+              <Divider />
+              <List>
+                {['Inicio'].map((text, index) => (
+                  <ListItem button key={text} component={Link}
+                  to='/'>
+                    <ListItemIcon style={{marginRight: '0px', color: '#FFFFFF'}}><Home /></ListItemIcon>
+                    <ListItemText disableTypography primary={text} style={{color: '#FFFFFF'}} />
+                  </ListItem>
+                ))}
+              </List>
+            </Box>
+            <Box
+            flex
+            justify='end'
+            align='end'>
+              <Flex
+              style={{width: '100%'}}
+              flex
+              justify='space-between'>
+                <Box><IconButton onClick={this.handleDrawerOpen} className={classNames(classes.menuButton, {
+                    [classes.hide]: this.state.open
+                  })} >
+                  <ChevronRight color='secondary' />
+              </IconButton></Box>
+                <Box><IconButton onClick={this.handleDrawerClose} className={classNames(classes.menuButton, {
+                    [classes.hide]: !this.state.open
+                  })}>
+                  <ChevronLeft color='secondary' />
+              </IconButton></Box>
+              </Flex>
+            </Box>
+          </Flex>
         </Drawer>
         <main className={classes.content} style={{backgroundColor: '#f9f6f2'}}>
           <div className={classes.toolbar} style={{backgroundColor: '#f9f6f2'}} />

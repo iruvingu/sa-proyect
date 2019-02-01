@@ -80,7 +80,7 @@ class Contacts extends Component {
                     <Face />
                   </div>
                   <div style={{flexBasis: '20.33%'}}>
-                    <Typography className={classes.heading}>{contact.nombre}</Typography>
+                    <Typography className={classes.heading}>{contact.name}</Typography>
                   </div>
                 </ExpansionPanelSummary>
                   <ExpansionPanelDetails style={{alignItems: 'center'}}>
@@ -90,7 +90,7 @@ class Contacts extends Component {
                     <div style={{
                       flexBasis: '50%',}}
                     >
-                      <Typography className={classes.heading}>{contact.numero}</Typography>
+                      <Typography className={classes.heading}>{contact.number}</Typography>
                     </div>
                   </ExpansionPanelDetails>
               </ExpansionPanel>
