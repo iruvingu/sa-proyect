@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Flex, Box } from 'reflexbox'
-import { Avatar, Typography, Paper, Icon, FormHelperText} from '@material-ui/core';
+import { Avatar, Typography, Paper, Icon, FormHelperText,
+ CircularProgress} from '@material-ui/core';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers'
 import MomentUtils from '@date-io/moment';
 import moment from 'moment-timezone'
@@ -26,7 +27,8 @@ class UserInfo extends Component {
 
   state = {
     startDate: yesterday,
-    finalDate: today
+    finalDate: today,
+    completed: 0,
   }
 
   static contextTypes = {
@@ -57,6 +59,9 @@ class UserInfo extends Component {
     const { worker } = this.props
     const { startDate, finalDate } = this.state
     // console.log(finalDate)
+
+    const batery = worker.device.battery.split("%",1)
+    console.log(`bateria ${batery}`)
     return (
       <div style={{
         maxHeight: 400,
@@ -85,7 +90,7 @@ class UserInfo extends Component {
                   w={1/4}
                   style={{height: 'auto'}}>
                     <Paper
-                    style={{width: '100%', background: '#EEF5FA'}}>
+                    style={{width: '100%', backgroundImage: 'linear-gradient(to right top, #133260, #005a86, #008297, #00a991, #7acb81)'}}>
                       <Flex
                       justify='start'
                       style={{
@@ -105,7 +110,7 @@ class UserInfo extends Component {
                         minWidth: 'auto'
                         }}>
                           <Box>
-                            <Typography variant="subtitle2" gutterBottom>{worker.name}</Typography>
+                            <Typography color='secondary' variant="body2" gutterBottom>{worker.name}</Typography>
                           </Box>
                         </Box>
                       </Flex>     
@@ -117,13 +122,13 @@ class UserInfo extends Component {
                   flex
                   align='flex-start'
                   justify='center'>
-                    <Paper style={{width: '100%', background: '#EEF5FA'}}>
+                    <Paper style={{width: '100%', backgroundImage: 'linear-gradient(to right top, #ff0000, #ff3037, #fd4d5a, #f46677, #e77d8f)'}}>
                       <Flex
                       m={1}
                       flex
                       column>
                         <Box>
-                          <Typography variant='body1'  style={{color:'#BFBBC8'}}>
+                          <Typography variant='body1'  color='secondary'>
                           IMEI
                           </Typography>
                         </Box>
@@ -139,18 +144,33 @@ class UserInfo extends Component {
                   flex
                   align='flex-start'
                   justify='center'>
-                    <Paper style={{width: '100%', background: '#EEF5FA'}}>
+                    <Paper style={{width: '100%', 
+                      backgroundImage: 'linear-gradient(to right top, #394c69, #507a8b, #7ca7a7, #b7d3c4, #f8ffea)'}}>
                       <Flex
                       m={1}
                       flex
                       column>
                         <Box>
-                          <Typography variant='body1'  style={{color:'#BFBBC8'}}>
+                          <Typography variant='body1' style={{color: '#FFFFFF'}}>
                             Bateria
                           </Typography>
                         </Box>
-                        <Box>
-                          <div>{worker.device.battery}</div>
+                        <Box
+                        flex
+                        align='center'>
+                          <Typography variant='body1' style={{color: '#FFFFFF', position: 'absolute'}}>
+                            {batery}%
+                          </Typography>
+                          <CircularProgress disableTypography variant='static' value={batery}
+                          style={{
+                          color: (batery < 25
+                            ? '#A73A34'
+                            : (batery < 50)
+                              ? '#D3D519'
+                              : (batery < 75)
+                                ? '#33B796'
+                                : '#16BB3C'
+                            ) }} />
                         </Box>
                       </Flex>
                     </Paper>
@@ -161,13 +181,13 @@ class UserInfo extends Component {
                   mr={1}
                   align='flex-start'
                   justify='center'>
-                    <Paper style={{width: '100%', background: '#EEF5FA'}}>
+                    <Paper style={{width: '100%', backgroundImage:' linear-gradient(to right top, #2fc4f8, #46b5fb, #67a5f7, #8893ec, #a57ed8)'}}>
                       <Flex
                       m={1}
                       flex
                       column>
                         <Box>
-                          <Typography variant='body1'  style={{color:'#BFBBC8'}}>
+                          <Typography variant='body1'  style={{color:'#FFFFFF'}}>
                             Señal
                           </Typography>
                         </Box>

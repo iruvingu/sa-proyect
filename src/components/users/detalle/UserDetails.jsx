@@ -5,7 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import { Flex, Box } from 'reflexbox';
 import { Drawer, AppBar, Toolbar, List, CssBaseline, Typography, 
   Divider, ListItem, ListItemIcon, ListItemText, Tooltip, IconButton,
-  Menu, MenuItem, Button } from '@material-ui/core';
+  Menu, MenuItem, Button, Avatar, MenuList, ClickAwayListener, Grow,
+  Paper, Popper } from '@material-ui/core';
 import { connect } from 'react-redux'
 import { Link, Route, Switch } from 'react-router-dom'
 /**
@@ -23,9 +24,13 @@ import Messages from './sms'
 import Contacts from './contacts/Contacts'
 import Calls from './calls/Calls'
 import Saludo from './saludo'
-
+// Paths
 import views from './settings'
-import { setRouterLocation } from '../../../actions'
+
+/**
+ * Actions
+ */
+import { setRouterLocation, signOut } from '../../../actions'
 
 const drawerWidth = 160;
 
@@ -97,6 +102,7 @@ const styles = theme => ({
 class UserDetails extends Component {
   state = {
     open: true,
+    openMenu: false,
     selectedIndex: null,
     anchorEl: null,
     colors: {
@@ -117,25 +123,32 @@ class UserDetails extends Component {
     this.setState({ selectedIndex: index });
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
+  // Handle when the drawer is open
   handleDrawerOpen = () => {
     this.setState({ open: true });
   };
 
+  // handle when the drower is closed
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
 
+  // handle when the
+  handleToggle = () => {
+    this.setState(state => ({ openMenu: !state.openMenu }));
+  };
+
+  handleClose = event => {
+    if (this.anchorEl.contains(event.target)) {
+      return;
+    }
+
+    this.setState({ openMenu: false });
+  };
+
   render() {
-    const { classes, theme, path } = this.props;
-    const { anchorEl } = this.state
+    const { classes, theme, path, auth } = this.props;
+    const { anchorEl, openMenu } = this.state
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -148,10 +161,10 @@ class UserDetails extends Component {
         >
           <Toolbar>
             <Flex
-             w={1}
              align='center'
-             justify='space-between'>
+             style={{width: '100%'}}>
               <Box
+              w={1/2}
               flex
               align='center'>
                 <Tooltip title='Regresar a inicio'>
@@ -174,23 +187,43 @@ class UserDetails extends Component {
                     </Typography>
                   </Flex>
               </Box>
-              <Box>
+              <Box
+              flex
+              w={1/2}
+              justify='flex-end'>
+                <Box>
+                  <Avatar style={{width: '30', height: '30',}} src={auth.photoURL} />
+                </Box>
+                
                 <Button
-                aria-owns={anchorEl ? 'simple-menu' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleClick}>
+                  buttonRef={node => {
+                    this.anchorEl = node;
+                  }}
+                  aria-owns={openMenu ? 'menu-list-grow' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleToggle}
+                >
                   <Typography style={{ color: '#404E67' }} variant='caption'>
-                    Administrador
+                      {auth.displayName}
                   </Typography>
                 </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  open={Boolean(anchorEl)}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-                </Menu>
+                <Popper open={openMenu} anchorEl={this.anchorEl} transition disablePortal>
+                  {({ TransitionProps, placement }) => (
+                    <Grow
+                      {...TransitionProps}
+                      id="menu-list-grow"
+                      style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                    >
+                      <Paper>
+                        <ClickAwayListener onClickAway={this.handleClose}>
+                          <MenuList>
+                            <MenuItem onClick={this.props.signOut}>Logout</MenuItem>
+                          </MenuList>
+                        </ClickAwayListener>
+                      </Paper>
+                    </Grow>
+                  )}
+                </Popper>
               </Box>
             </Flex>
           </Toolbar>
@@ -317,4 +350,4 @@ const MapStateToProps = ({ auth, path }) => {
   })
 }
 
-export default connect(MapStateToProps, {setRouterLocation})(UserDetailsWithStyles)
+export default connect(MapStateToProps, {setRouterLocation, signOut})(UserDetailsWithStyles)
